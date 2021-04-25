@@ -1,12 +1,26 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <header>
+      <Logo />
+      <Menu />
+    </header>
+
     <router-view />
   </div>
 </template>
+
+<script>
+  import Logo from "@/components/Logo.vue";
+  import Menu from "@/components/Menu.vue";
+
+  export default {
+    name: "App",
+    components: {
+      Logo,
+      Menu
+    },
+  };
+</script>
 
 <style lang="scss">
 #app {
