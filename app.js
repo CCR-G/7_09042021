@@ -6,10 +6,6 @@ const morgan = require('morgan');
 const path = require('path');
 const fs = require('fs');
 
-const db_config = require('./db-config');
-const connection = require('./helpers/connection');
-const query = require('./helpers/query');
-
 const app = express();
 
 // MIDDLEWARES
@@ -30,13 +26,9 @@ app.use(morgan('combined', { stream: accessLogStream }));
 
 // ROUTES
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('Hello World!'));
 
-app.get('/list', async (req, res) => {
-    const conn = await connection(db_config).catch(e => { console.log(e) });
-    const results = await query(conn, 'SELECT * FROM tweets').catch(console.log);
-    res.json({ results });
-});
+require("./routes/post.routes")(app);
 
 // EXPORT
 

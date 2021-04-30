@@ -1,14 +1,10 @@
 const mysql = require('mysql');
+const dbConfig = require('../config/db-config');
 
-module.exports = async (params) => new Promise(
-    (resolve, reject) => {
-        const connection = mysql.createConnection(params);
-        connection.connect(error => {
-            if (error) {
-                reject(error);
-                return;
-            }
-            resolve(connection);
-        })
-    }
-);
+const connection = mysql.createConnection(dbConfig);
+connection.connect(error => {
+    if (error) throw error;
+    console.log("Successfully connected to the database.");
+});
+
+module.exports = connection;
