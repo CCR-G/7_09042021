@@ -1,0 +1,21 @@
+<template>
+    <section>
+        <form>
+            <label>
+                Nom d'utilisateur
+                <input type="text" v-model="user.name">
+            </label>
+            <button type="submit">Modifier</button>
+        </form>
+    </section>
+</template>
+
+<script lang="ts">
+    import { Component, Prop, Vue } from "vue-property-decorator";
+    import { User } from "../../types";
+
+    @Component
+    export default class EditUsername extends Vue {
+        @Prop() private user!: User;
+    }
+</script>

@@ -1,0 +1,37 @@
+<template>
+    <section>
+        <header>
+            <p>{{ post.author }}</p>
+            <time datetime="2015-05-16 19:00">{{ post.postdate }}</time>
+        </header>
+        <p>{{ post.content }}</p>
+
+        <!--If too long : just css text-overflow:ellipsis and a button that changes that-->
+        <button v-if='post.content.length > 50'>Afficher la suite…</button>
+    </section>
+</template>
+
+<script lang="ts">
+    import { Component, Prop, Vue } from "vue-property-decorator";
+    import { PostClass } from "../../../types";
+
+    @Component
+    export default class PostContent extends Vue {
+        //We need to create a Post class or interface that contains 
+        // an author, a date, a content, comments
+        @Prop() private post!: PostClass;
+    }
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="scss">
+    header p {
+        font-weight: bold;
+    }
+
+    button {
+        background-color: orange;
+        border-radius: 20px;
+        color: white;
+    }
+</style>

@@ -1,14 +1,14 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import NewsFeed from "../views/NewsFeed.vue";
+import Main from "../views/Main.vue";
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "NewsFeed",
-    component: NewsFeed,
+    name: "Main",
+    component: Main,
   },
   {
     path: "/account",
