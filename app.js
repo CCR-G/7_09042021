@@ -29,6 +29,8 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.get('/', (req, res) => res.send('Hello World!'));
 
 require("./routes/post.routes")(app);
+require("./routes/user.routes")(app);
+require("./routes/comment.routes")(app);
 
 // EXPORT
 
