@@ -1,9 +1,3 @@
-interface PostType {
-    author: string,
-    content: string,
-    comments?: CommentType[]
-}
-
 export class PostClass {
     id: string;
     content: string;

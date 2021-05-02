@@ -1,8 +1,8 @@
 <template>
     <section>
         <header>
-            <p>{{ post.author }}</p>
-            <time datetime="2015-05-16 19:00">{{ post.postdate }}</time>
+            <p>{{ author }}</p>
+            <time v-bind:datetime=post.postdate>{{ post.postdate }}</time>
         </header>
         <p>{{ post.content }}</p>
 
@@ -20,6 +20,23 @@
         //We need to create a Post class or interface that contains 
         // an author, a date, a content, comments
         @Prop() private post!: PostClass;
+
+        author = '';
+        
+        mounted() {
+            this.getPostAuthor(this.post.author);
+        }
+
+        private async getPostAuthor(user_id): Promise<void> {
+            const author_request = await fetch(`http://localhost:3000/users/${user_id}/username`);
+            if (!author_request.ok) {
+            throw new Error(`Error ${author_request.status} : Author could not be retrieved.`);
+            }
+
+            const author = await author_request.json();
+
+            this.author = author.username;
+        }
     }
 </script>
 
