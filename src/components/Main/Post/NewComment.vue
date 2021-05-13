@@ -4,12 +4,13 @@
             <textarea v-model='new_comment_content'></textarea>
         </label>
         <input type="reset">
-        <input v-on:click="addComment" type="submit">
+        <button v-on:click="addComment" type="button">Commenter</button>
     </form>
 </template>
 
 <script lang="ts">
     import { Component, Prop, Vue } from "vue-property-decorator";
+    import { postNewComment } from "../../../helpers/comment-getter";
     import { PostClass } from "../../../types";
 
     @Component
@@ -19,7 +20,7 @@
         new_comment_content = '';
 
         addComment() {
-            this.post.comments.push({author: "comment author", content: this.new_comment_content});
+            postNewComment({author: 1, content: this.new_comment_content, post: this.post.id }).then(result => { console.log(result) })
         }
     }
 </script>

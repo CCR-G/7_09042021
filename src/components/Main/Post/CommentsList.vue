@@ -3,7 +3,7 @@
         <ul v-if="comments_list.length === 1">
             <li>
                 <header>
-                    <p>{{ comments_list[0].author }}</p>
+                    <p>{{ comments_list[0].user }}</p>
                 </header>
                 <p>{{ comments_list[0].content }}</p>
             </li>
@@ -11,7 +11,7 @@
         <ul v-if="comments_list.length > 1">
             <li v-for="comment in comments_list" v-bind:key="comment.content">
                 <header>
-                    <p>{{ comment.author }}</p>
+                    <p>{{ comment.user }}</p>
                 </header>
                 <p>{{ comment.content }}</p>
             </li>
@@ -35,11 +35,10 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-section {
-    border: black solid 1px;
-    border-radius: 20px;
-    margin: 15px;
-    padding: 15px;
-}
+    section {
+        border: black solid 1px;
+        border-radius: 20px;
+        margin: 15px;
+        padding: 15px;
+    }
 </style>
-

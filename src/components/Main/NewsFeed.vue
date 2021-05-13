@@ -10,9 +10,10 @@
 
 <script lang="ts">
     import { Component, Vue } from "vue-property-decorator";
-    import { PostClass, CommentType } from '../../types';
+    import { PostClass } from '../../types';
     import Post from './Post/Post.vue';
     import NewPost from './NewPost.vue';
+    import { getPosts } from "../../helpers/post-getter";
 
     @Component({
       components: { NewPost, Post }
@@ -21,52 +22,9 @@
       posts: PostClass[] = [];
 
       mounted() {
-        this.getPosts();
-      }
-
-      async getPosts() {
-          const api_response = await fetch('http://localhost:3000/posts');
-
-          if (!api_response.ok) {
-            throw new Error(`Error ${api_response.status} : List of posts could not be retrieved.`);
-          }
-
-          let posts_list: PostClass[] = [];
-
-          const json_posts_list = await api_response.json();
-          json_posts_list.forEach(async json_post => {
-
-            const comments_list = await this.getComments(json_post.id);
-
-            posts_list.push(new PostClass(
-                json_post.id,
-                json_post.content,
-                json_post.user,
-                json_post.postdate,
-                comments_list
-            ));
-          });
-
-          this.posts = posts_list;
-      }
-
-      private async getComments(post_id): Promise<CommentType[]> {
-        const comments_request = await fetch(`http://localhost:3000/posts/${post_id}/comments`);
-        if (!comments_request.ok) {
-          throw new Error(`Error ${comments_request.status} : List of commments could not be retrieved.`);
-        }
-
-        let comments_list: CommentType[] = [];
-
-        const json_comments_list = await comments_request.json();
-        json_comments_list.forEach(json_comment => {
-          comments_list.push({
-              author: json_comment.author,
-              content: json_comment.content
-            });
+        getPosts().then((result) => {
+          this.posts = result;
         });
-
-        return comments_list;
       }
     }
 </script>

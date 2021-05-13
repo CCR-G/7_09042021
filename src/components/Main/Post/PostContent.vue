@@ -14,6 +14,7 @@
 <script lang="ts">
     import { Component, Prop, Vue } from "vue-property-decorator";
     import { PostClass } from "../../../types";
+    import { getUserName } from "../../../helpers/user-getter";
 
     @Component
     export default class PostContent extends Vue {
@@ -24,18 +25,9 @@
         author = '';
         
         mounted() {
-            this.getPostAuthor(this.post.author);
-        }
-
-        private async getPostAuthor(user_id): Promise<void> {
-            const author_request = await fetch(`http://localhost:3000/users/${user_id}/username`);
-            if (!author_request.ok) {
-            throw new Error(`Error ${author_request.status} : Author could not be retrieved.`);
-            }
-
-            const author = await author_request.json();
-
-            this.author = author.username;
+            getUserName(this.post.author).then((result) => {
+                this.author = result;
+            });
         }
     }
 </script>

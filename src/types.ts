@@ -15,8 +15,9 @@ export class PostClass {
 }
 
 export interface CommentType {
-    author: string;
+    user: string;
     content: string;
+    post: string;
 }
 
 export interface User {
