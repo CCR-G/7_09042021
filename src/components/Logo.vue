@@ -1,6 +1,6 @@
 <template>
     <div class="logo-container">
-      <img alt="Logo de Groupomania" src="../assets/logo.png" />
+      <img alt="Logo de Groupomania" src="../assets/icon-left-font.svg" width="200"/>
     </div>
 </template>
 
