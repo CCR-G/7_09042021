@@ -3,17 +3,17 @@
         <ul v-if="comments_list.length === 1">
             <li>
                 <header>
-                    <p>{{ comments_list[0].user }}</p>
+                    <p>{{ comments_list[0].comment_author }}</p>
                 </header>
-                <p>{{ comments_list[0].content }}</p>
+                <p>{{ comments_list[0].comment_content }}</p>
             </li>
         </ul>
         <ul v-if="comments_list.length > 1">
-            <li v-for="comment in comments_list" v-bind:key="comment.content">
+            <li v-for="comment in comments_list" v-bind:key="comment.comment_content">
                 <header>
-                    <p>{{ comment.user }}</p>
+                    <p>{{ comment.comment_author }}</p>
                 </header>
-                <p>{{ comment.content }}</p>
+                <p>{{ comment.comment_content }}</p>
             </li>
         </ul>
 

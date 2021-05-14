@@ -14,7 +14,6 @@
 <script lang="ts">
     import { Component, Prop, Vue } from "vue-property-decorator";
     import { PostClass } from "../../../types";
-    import { getUserName } from "../../../helpers/user-getter";
 
     @Component
     export default class PostContent extends Vue {
@@ -23,12 +22,6 @@
         @Prop() private post!: PostClass;
 
         author = '';
-        
-        mounted() {
-            getUserName(this.post.author).then((result) => {
-                this.author = result;
-            });
-        }
     }
 </script>
 

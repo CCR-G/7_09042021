@@ -1,8 +1,12 @@
 <template>
     <article>
         <PostContent v-bind:post='post' />
-        <NewComment v-bind:post='post' />
-        <CommentsList v-bind:comments_list='post.comments' />
+
+        <button v-if="!show_comment_form" v-on:click="displayCommentForm">Ajouter un commentaire</button>
+        <NewComment v-if="show_comment_form" v-bind:post='post' />
+
+        <button v-if="!show_comments" v-on:click="displayComments">Voir tous les commentaires</button>
+        <CommentsList v-if="show_comments" v-bind:comments_list='post.comments' />
     </article>
 </template>
 
@@ -21,6 +25,18 @@
         //We need to create a Post class or interface that contains 
         // an author, a date, a content, comments
         @Prop() private post!: PostClass;
+
+        private show_comments = false;
+        private show_comment_form = false;
+
+        displayCommentForm() {
+            this.show_comment_form = true;
+            this.show_comments = true;
+        }
+
+        displayComments() {
+            this.show_comments = true;
+        }
     }
 </script>
 

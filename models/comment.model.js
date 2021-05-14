@@ -22,19 +22,4 @@ Comment.create = (newComment, result) => {
     });
 };
 
-
-Comment.getAll = (postId, result) => {
-    console.log(postId)
-    sql.query(`SELECT * FROM comments WHERE post=${postId}`, (err, res) => {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-            return;
-        }
-
-        console.log("comments: ", res);
-        result(null, res);
-    });
-};
-
 module.exports = Comment;

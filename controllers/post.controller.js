@@ -33,6 +33,30 @@ exports.findAll = (req, res) => {
                 message:
                     err.message || "Some error occurred while retrieving posts."
             });
-        else res.send(data);
+        else {
+            data.forEach((post, index) => {
+                if (
+                    !data[index - 1] ||
+                    post.post_id !== data[index - 1].post_id
+                ) {
+                    if (post.comment_content) {
+                        post.comments = [{ comment_content: post.comment_content, comment_author: post.comment_author }];
+                    }
+                    else {
+                        post.comments = []
+                    }
+
+                    delete post.comment_content;
+                    delete post.comment_author;
+                }
+                else {
+                    data[index - 1].comments.push({ comment_content: post.comment_content, comment_author: post.comment_author });
+                    data.splice(index, 1);
+                }
+            });
+
+            res.send(data);
+            console.log(data);
+        }
     });
 };

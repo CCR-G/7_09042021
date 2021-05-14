@@ -1,5 +1,4 @@
-import { PostClass } from "@/types";
-import { getComments } from "./comment-getter";
+import { CommentType, PostClass } from "@/types";
 
 export async function getPosts() {
     const api_response = await fetch('http://localhost:3000/posts');
@@ -11,16 +10,14 @@ export async function getPosts() {
     const posts_list: PostClass[] = [];
 
     const json_posts_list = await api_response.json();
-    json_posts_list.forEach(async (json_post: { id: string; content: string; user: string; postdate: string; }) => {
-
-      const comments_list = await getComments(json_post.id);
+    json_posts_list.forEach(async (json_post: { post_id: string; post_content: string; post_author: string; post_date: string; comments: CommentType[]; }) => {
 
       posts_list.push(new PostClass(
-          json_post.id,
-          json_post.content,
-          json_post.user,
-          json_post.postdate,
-          comments_list
+          json_post.post_id,
+          json_post.post_content,
+          json_post.post_author,
+          json_post.post_date,
+          json_post.comments,
       ));
     });
 

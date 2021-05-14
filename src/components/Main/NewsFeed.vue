@@ -2,7 +2,7 @@
   <section>
     <h1>Fil d'actualité</h1>
     <p v-if="posts.length === 0">There are no post to show.</p>
-    <div v-for="post in posts" v-bind:key="post.content">
+    <div v-for="post in posts" v-bind:key="post.post_id">
         <Post v-bind:post='post' />
     </div>
   </section>

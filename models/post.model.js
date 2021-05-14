@@ -23,7 +23,32 @@ Post.create = (newPost, result) => {
 };
 
 Post.getAll = result => {
-    sql.query("SELECT * FROM posts", (err, res) => {
+    sql.query(`
+    SELECT
+    Posts.id AS post_id,
+    
+    Posts.content AS post_content,
+    Posts.postdate AS post_date,
+    post_user.username AS post_author,
+    
+    Comments.content AS comment_content,
+    comment_user.username AS comment_author
+    
+    FROM Comments
+    
+    RIGHT JOIN Posts
+    ON Comments.post = Posts.id
+    
+    LEFT JOIN Users AS comment_user
+    ON Comments.user = comment_user.id
+    
+    LEFT JOIN Users AS post_user
+    ON Posts.user = post_user.id
+    
+    ORDER BY Posts.id, Comments.id
+	;
+    `, (err, res) => {
+        //faire une jointure pour récupérer directement le nom d'utilisateur
         if (err) {
             console.log("error: ", err);
             result(null, err);
