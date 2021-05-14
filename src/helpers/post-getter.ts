@@ -26,3 +26,15 @@ export async function getPosts() {
 
     return posts_list;
 }
+
+export async function postNewPost(content: string, author: number) {
+  const request = await fetch(`http://localhost:3000/posts`, {
+      method: "POST",
+      body: JSON.stringify({ content: content, user: author }),
+      headers: { "Content-type": "application/json" }
+  });
+
+  if (!request.ok) {
+      throw new Error(`Error ${request.status} : There has been a problem with your new post request.`);
+  }
+}
