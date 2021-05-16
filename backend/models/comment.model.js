@@ -45,7 +45,7 @@ Comment.getAllByIdButTwoFirst = (postId, result) => {
             return;
         }
 
-        console.log("posts: ", res);
+        console.log("comments: ", res);
         result(null, res);
     });
 };
