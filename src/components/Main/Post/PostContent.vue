@@ -1,7 +1,7 @@
 <template>
     <section>
         <header>
-            <p>{{ author }}</p>
+            <p>{{ post.author }}</p>
             <time v-bind:datetime=post.postdate>{{ post.postdate }}</time>
         </header>
         <p>{{ post.content }}</p>
@@ -20,8 +20,6 @@
         //We need to create a Post class or interface that contains 
         // an author, a date, a content, comments
         @Prop() private post!: PostClass;
-
-        author = '';
     }
 </script>
 

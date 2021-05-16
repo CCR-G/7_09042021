@@ -1,23 +1,13 @@
 <template>
-    <section v-if='comments_list.length > 0'>
-        <ul v-if="comments_list.length === 1">
-            <li>
+    <section>
+        <ul>
+            <li v-for="comment in comments_list" v-bind:key="comment.content">
                 <header>
-                    <p>{{ comments_list[0].comment_author }}</p>
+                    <p>{{ comment.author }}</p>
                 </header>
-                <p>{{ comments_list[0].comment_content }}</p>
+                <p>{{ comment.content }}</p>
             </li>
         </ul>
-        <ul v-if="comments_list.length > 1">
-            <li v-for="comment in comments_list" v-bind:key="comment.comment_content">
-                <header>
-                    <p>{{ comment.comment_author }}</p>
-                </header>
-                <p>{{ comment.comment_content }}</p>
-            </li>
-        </ul>
-
-        <button type="button" v-if='comments_list.length > 2'>Plus de commentaires</button>
     </section>
 </template>
 

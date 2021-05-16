@@ -34,29 +34,15 @@ exports.findAll = (req, res) => {
                     err.message || "Some error occurred while retrieving posts."
             });
         else {
-            data.forEach((post, index) => {
-                if (
-                    !data[index - 1] ||
-                    post.post_id !== data[index - 1].post_id
-                ) {
-                    if (post.comment_content) {
-                        post.comments = [{ comment_content: post.comment_content, comment_author: post.comment_author }];
-                    }
-                    else {
-                        post.comments = []
+            data.forEach((post) => {
+                if (post.last_comment_content) {
+                    post.last_comment = { content: post.last_comment_content, author: post.last_comment_author };
                     }
 
-                    delete post.comment_content;
-                    delete post.comment_author;
-                }
-                else {
-                    data[index - 1].comments.push({ comment_content: post.comment_content, comment_author: post.comment_author });
-                    data.splice(index, 1);
-                }
+                delete post.last_comment_content;
+                delete post.last_comment_author;
             });
-
             res.send(data);
-            console.log(data);
-        }
+        };
     });
 };

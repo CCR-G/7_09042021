@@ -10,14 +10,15 @@ export async function getPosts() {
     const posts_list: PostClass[] = [];
 
     const json_posts_list = await api_response.json();
-    json_posts_list.forEach(async (json_post: { post_id: string; post_content: string; post_author: string; post_date: string; comments: CommentType[]; }) => {
+    json_posts_list.forEach(async (json_post: { post_id: string; post_content: string; post_author: string; post_date: string; comments_number: number, last_comment: CommentType; }) => {
 
       posts_list.push(new PostClass(
           json_post.post_id,
           json_post.post_content,
           json_post.post_author,
           json_post.post_date,
-          json_post.comments,
+          json_post.comments_number,
+          json_post.last_comment
       ));
     });
 

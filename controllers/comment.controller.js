@@ -26,3 +26,14 @@ exports.create = (req, res) => {
     });
 };
 
+exports.findAllByIdButTwo = (req, res) => {
+    Comment.getAllByIdButTwoFirst
+        (req.params.postId, (err, data) => {
+            if (err)
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occurred while retrieving comments."
+                });
+            else res.send(data);
+        });
+}
