@@ -1,18 +1,18 @@
 export class PostClass {
-    id: string;
+    id: number;
     content: string;
     author: string;
     postdate: string;
     comments_number: number;
-    last_comment: CommentType;
+    comments: CommentType[];
 
-    constructor(id: string, content: string, author: string, postdate: string, comments_number: number, last_comment: CommentType) {
+    constructor(id: number, content: string, author: string, postdate: Date, comments_number: number, comments: CommentType[]) {
         this.id = id;
         this.content = content;
         this.author = author;
-        this.postdate = postdate;
+        this.postdate = postdate.toLocaleString();
         this.comments_number = comments_number;
-        this.last_comment = last_comment;
+        this.comments = comments;
     }
 }
 

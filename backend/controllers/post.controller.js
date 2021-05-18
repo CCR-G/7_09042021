@@ -12,7 +12,6 @@ exports.create = (req, res) => {
     const post = new Post({
         content: req.body.content,
         user: req.body.user,
-        postdate: req.body.postdate
     });
 
     // Save Post in the database
@@ -37,7 +36,7 @@ exports.findAll = (req, res) => {
             data.forEach((post) => {
                 if (post.last_comment_content) {
                     post.last_comment = { content: post.last_comment_content, author: post.last_comment_author };
-                    }
+                }
 
                 delete post.last_comment_content;
                 delete post.last_comment_author;

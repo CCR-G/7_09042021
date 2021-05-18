@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAllByIdButTwo = (req, res) => {
-    Comment.getAllByIdButTwoFirst
+    Comment.getAllById
         (req.params.postId, (err, data) => {
             if (err)
                 res.status(500).send({

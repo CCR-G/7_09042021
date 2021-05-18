@@ -22,7 +22,7 @@ Comment.create = (newComment, result) => {
     });
 };
 
-Comment.getAllByIdButTwoFirst = (postId, result) => {
+Comment.getAllById = (postId, result) => {
     sql.query(`
     SELECT 
         Comments.content AS content,
@@ -34,9 +34,7 @@ Comment.getAllByIdButTwoFirst = (postId, result) => {
             ON Comments.user = comment_user.id
         
         WHERE post = ${postId}
-        
         ORDER BY Comments.id DESC
-        LIMIT 2 OFFSET 1
     ;
     `, (err, res) => {
         if (err) {

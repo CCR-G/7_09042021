@@ -4,13 +4,13 @@ class Post {
     constructor(post) {
         this.content = post.content;
         this.user = post.user;
-        this.postdate = post.postdate;
+
     }
 };
 
 Post.create = (newPost, result) => {
-    // Syntaxe MySQL à remplacer par VALUES
-    sql.query("INSERT INTO posts SET ?", newPost, (err, res) => {
+    const query = `INSERT INTO Posts (content, user, postdate) VALUES ('${newPost.content}', ${newPost.user}, CURRENT_TIMESTAMP)`
+    sql.query(query, newPost, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -57,7 +57,7 @@ Post.getAll = result => {
     LEFT JOIN Users AS post_user
     ON Posts.user = post_user.id
     
-        ORDER BY Posts.id
+        ORDER BY Posts.id DESC
 	;
     `, (err, res) => {
         if (err) {
