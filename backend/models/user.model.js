@@ -1,9 +1,11 @@
 const sql = require("../helpers/connection");
 
-const User = (user) => {
+class User {
+    constructor(user) {
     this.username = user.username;
     this.email = user.email;
     this.userpassword = user.userpassword;
+    }
 };
 
 User.create = (newUser, result) => {

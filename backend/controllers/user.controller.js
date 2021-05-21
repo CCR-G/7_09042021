@@ -1,4 +1,5 @@
 const User = require("../models/user.model.js");
+const bcrypt = require('bcrypt');
 
 exports.create = (req, res) => {
     // Validate request
@@ -8,11 +9,12 @@ exports.create = (req, res) => {
         });
     }
 
-    // Create a User
+    bcrypt.hash(req.body.userpassword, 10)
+        .then((hashed_password) => {
     const user = new User({
-        content: req.body.content,
-        user: req.body.user,
-        userdate: req.body.userdate
+                username: req.body.username,
+                email: req.body.email,
+                userpassword: hashed_password
     });
 
     // Save User in the database
@@ -24,4 +26,11 @@ exports.create = (req, res) => {
             });
         else res.send(data);
     });
+        })
+        .catch((err) => {
+            console.log("Could not create hashed password");
+            console.log(err);
+        })
+};
+
 };

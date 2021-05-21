@@ -6,7 +6,7 @@
                 <li>
                     <router-link to="/">Home</router-link>
                     <router-link to="/account">Account</router-link>
-                    <router-link to="/login">Signup</router-link>
+                    <router-link to="/register">Register</router-link>
                     <router-link to="/login">Login</router-link>
                     <router-link to="/login">Logout</router-link>
                 </li>
