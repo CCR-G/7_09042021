@@ -21,4 +21,18 @@ User.create = (newUser, result) => {
     });
 };
 
+User.getOneByEmail = (email, result) => {
+    sql.query(`SELECT * FROM Users WHERE email = '${email}';`,
+        (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                result(null, err);
+                return;
+            }
+
+            console.log(`user with ${email} email adress : `, res[0]);
+            result(null, res[0]);
+        });
+};
+
 module.exports = User;

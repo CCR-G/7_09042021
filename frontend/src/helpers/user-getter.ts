@@ -1,14 +1,30 @@
 import { User } from '../types';
 
 export async function postNewUser(user: User) {
-    const request = await fetch(`http://localhost:3000/users`, {
+    const request = await fetch(`http://localhost:3000/user/register`, {
         method: "POST",
         body: JSON.stringify({ username: user.name, email: user.email, userpassword: user.password }),
         headers: { "Content-type": "application/json" }
     });
   
     if (!request.ok) {
-        throw new Error(`Error ${request.status} : There has been a problem with your new post request.`);
+        const request_message = await request.json();
+        throw new Error(`Error ${request.status} : ${request_message.error}.`);
     }
   }
   
+export async function loginUser(user: User) {
+    const request = await fetch(`http://localhost:3000/user/login`, {
+        method: "POST",
+        body: JSON.stringify({ email: user.email, password: user.password }),
+        headers: { "Content-type": "application/json" }
+    });
+  
+    const request_message = await request.json();
+
+    if (!request.ok) {
+        throw new Error(`Error ${request.status} : ${request_message.error}`);
+    }
+
+    return request_message;
+}

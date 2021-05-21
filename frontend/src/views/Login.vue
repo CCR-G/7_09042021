@@ -4,14 +4,16 @@
 
         <form>
             <label>
-                Identifiant
-                <input type="text" v-model='user.name' />
+                Email
+                <input type="text" v-model='user.email' />
             </label>
             <label>
                 Mot de passe
                 <input type="password" v-model='user.password'>
             </label>
             <button type="button" v-on:click="login">Connexion</button>
+            <p v-if="error">{{ error }}</p>
+            <p v-if="success">{{ success }}</p>
         </form>
     </div>
 </template>
@@ -24,12 +26,23 @@
     @Component
     export default class EditPassword extends Vue {
         user: User = {
-            name: '',
+            email: '',
             password: '',
         }
 
+        error = '';
+        success = '';
+
         login() {
-            loginUser(this.user.name, this.user.password)
+            loginUser(this.user)
+                .then((user) => {
+                    this.user.email = '';
+                    this.user.password = '';
+                    this.success = 'Logged in !';
+                })
+                .catch((err) => {
+                    this.error = err.message;
+                })
         }
     }
 </script>
