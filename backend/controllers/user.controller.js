@@ -1,6 +1,7 @@
 const User = require("../models/user.model.js");
 const utils = require('./utils/user-utils');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.create = (req, res) => {
     // Validate request
@@ -37,38 +38,41 @@ exports.create = (req, res) => {
 exports.findOne = (req, res) => {
     // Validate request
     if (!req.body) {
-        res.status(400).send({ message: "Request content can not be empty!" });
-        return;
+        return res.status(400).send({ message: "Request content can not be empty!" });
     }
 
     if (!req.body.email) {
-        res.status(400).send({ error: 'Email field cannot be empty' });
-        return;
+        return res.status(400).send({ error: 'Email field cannot be empty' });
     }
 
     if (!req.body.password) {
-        res.status(400).send({ error: 'Password field cannot be empty' });
-        return;
+        return res.status(400).send({ error: 'Password field cannot be empty' });
     }
 
     User.getOneByEmail(req.body.email, (err, user) => {
         if (err) {
-            res.status(500).send({ message: err.message || "Some error occurred while retrieving the user." });
-            return;
+            return res.status(500).send({ message: err.message || "Some error occurred while retrieving the user." });
         }
 
         if (!user) {
-            res.status(401).send({ error: 'Utilisateur non trouvé !' });
-            return;
+            return res.status(401).send({ error: 'Utilisateur non trouvé !' });
         }
 
         bcrypt.compare(req.body.password, user.userpassword)
             .then(valid => {
                 if (!valid) {
-                    return res.status(401).json({ error: 'Mot de passe incorrect !' });
+                    return res.status(401).send({ error: 'Mot de passe incorrect !' });
                 }
-                res.send(user);
+
+                const token = jwt.sign(
+                    { user_email: user.email },
+                    process.env.TOKEN_SECRET_KEY,
+                    { expiresIn: '1h' }
+                )
+
+                return res.status(200).json({ username: user.username, token: token });
             })
-            .catch(error => { res.status(500).json({ error }) });
+            .catch(error => { res.status(500).send({ error }) });
+        //Should be caught, and not go to front end
     });
 }

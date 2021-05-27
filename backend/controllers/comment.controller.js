@@ -26,7 +26,7 @@ exports.create = (req, res) => {
     });
 };
 
-exports.findAllByIdButTwo = (req, res) => {
+exports.findAll = (req, res) => {
     Comment.getAllById
         (req.params.postId, (err, data) => {
             if (err)

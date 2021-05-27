@@ -5,6 +5,7 @@
             <textarea aria-labelledby="write-post-title" v-model="content"></textarea>
             <input type="reset" value="Effacer">
             <button type="button" v-on:click="createPost">Poster</button>
+            <p v-if="error">{{ error }}</p>
         </form>
     </section>
 </template>
@@ -16,6 +17,7 @@
     @Component
     export default class NewPost extends Vue {
         content = '';
+        error = '';
 
         get user() {
             return 1;
@@ -25,6 +27,13 @@
         createPost(): void {
             //this.$emit('new-post-created', this.content);
             postNewPost(this.content, this.user)
+                .then(() => {
+                    this.content = '';
+                })
+                .catch((err) => {
+                    this.error = err.message;
+                    console.log("Something went wrong with your new post… Please try again. ")
+                })
         }
     }
 </script>

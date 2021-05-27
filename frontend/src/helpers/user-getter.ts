@@ -1,10 +1,11 @@
 import { User } from '../types';
+import { getHttpHeaders } from './http-header-getter';
 
 export async function postNewUser(user: User) {
     const request = await fetch(`http://localhost:3000/user/register`, {
         method: "POST",
         body: JSON.stringify({ username: user.name, email: user.email, userpassword: user.password }),
-        headers: { "Content-type": "application/json" }
+        headers: getHttpHeaders()
     });
   
     if (!request.ok) {
@@ -17,7 +18,7 @@ export async function loginUser(user: User) {
     const request = await fetch(`http://localhost:3000/user/login`, {
         method: "POST",
         body: JSON.stringify({ email: user.email, password: user.password }),
-        headers: { "Content-type": "application/json" }
+        headers: getHttpHeaders()
     });
   
     const request_message = await request.json();

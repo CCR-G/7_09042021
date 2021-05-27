@@ -1,7 +1,10 @@
 import { CommentType, PostClass } from "@/types";
+import { getHttpHeaders } from './http-header-getter';
 
 export async function getPosts(): Promise<PostClass[]> {
-    const api_response = await fetch('http://localhost:3000/posts');
+  const api_response = await fetch('http://localhost:3000/posts', {
+      headers: getHttpHeaders()
+  });
 
     if (!api_response.ok) {
       throw new Error(`Error ${api_response.status} : List of posts could not be retrieved.`);
@@ -46,10 +49,12 @@ export async function postNewPost(content: string, author: number) {
   const request = await fetch(`http://localhost:3000/posts`, {
       method: "POST",
       body: JSON.stringify({ content: content, user: author }),
-      headers: { "Content-type": "application/json" }
+      headers: getHttpHeaders()
   });
 
+  const request_message = await request.json();
+
   if (!request.ok) {
-      throw new Error(`Error ${request.status} : There has been a problem with your new post request.`);
+    throw new Error(`Error ${request.status} : ${request_message.error}`);
   }
 }

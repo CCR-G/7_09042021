@@ -38,10 +38,13 @@
                 .then((user) => {
                     this.user.email = '';
                     this.user.password = '';
+                    this.error = '';
                     this.success = 'Logged in !';
+                    sessionStorage.setItem("token", user.token);
                 })
                 .catch((err) => {
                     this.error = err.message;
+                    this.success = '';
                 })
         }
     }
