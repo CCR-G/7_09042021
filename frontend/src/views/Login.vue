@@ -22,6 +22,7 @@
     import { Component, Vue } from "vue-property-decorator";
     import { User } from "../types";
     import { loginUser } from "../helpers/user-getter";
+    import router from '../router/index';
 
     @Component
     export default class EditPassword extends Vue {
@@ -41,6 +42,7 @@
                     this.error = '';
                     this.success = 'Logged in !';
                     sessionStorage.setItem("token", user.token);
+                    router.replace("/");
                 })
                 .catch((err) => {
                     this.error = err.message;

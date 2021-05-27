@@ -24,6 +24,7 @@
     import { Component, Vue } from "vue-property-decorator";
     import { User } from "../types";
     import { postNewUser } from "../helpers/user-getter";
+    import router from "../router";
 
     @Component
     export default class EditPassword extends Vue {
@@ -38,6 +39,7 @@
                 this.user.email = '';
                 this.user.name = '';
                 this.user.password = '';
+                router.replace("/");
             });
         }
     }

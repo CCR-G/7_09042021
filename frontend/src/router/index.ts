@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Main from "../views/Main.vue";
+import { getToken } from '../helpers/token-getter';
 
 Vue.use(VueRouter);
 
@@ -37,6 +38,13 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'Login' && to.name !== 'Register' && !getToken()) {
+    next({ name: 'Login' });
+  }
+  else next();
 });
 
 export default router;
