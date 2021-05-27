@@ -3,8 +3,10 @@
         <h1 id="write-post-title">Rédiger un post</h1>
         <form>
             <textarea aria-labelledby="write-post-title" v-model="content"></textarea>
-            <input type="reset" value="Effacer">
-            <button type="button" v-on:click="createPost">Poster</button>
+            <fieldset class="save-cancel-buttons">
+                <input type="reset" value="Effacer">
+                <button type="button" v-on:click="createPost">Poster</button>
+            </fieldset>
             <p v-if="error">{{ error }}</p>
         </form>
     </section>

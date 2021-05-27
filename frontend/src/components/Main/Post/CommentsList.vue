@@ -1,6 +1,6 @@
 <template>
-    <section>
-        <ul>
+    <section class="comments-section">
+        <ul class="comments-list">
             <li v-for="comment in comments_list" v-bind:key="comment.content">
                 <header>
                     <p>{{ comment.author }}</p>
@@ -25,10 +25,4 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-    section {
-        border: black solid 1px;
-        border-radius: 20px;
-        margin: 15px;
-        padding: 15px;
-    }
 </style>

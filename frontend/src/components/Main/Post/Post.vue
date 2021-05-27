@@ -6,7 +6,7 @@
         <NewComment v-if="show_comment_form" v-bind:post='post' v-on:cancel="show_comment_form = false" v-on:new-comment-posted="addComment"/>
 
         <CommentsList v-if="post.comments_number > 0" v-bind:comments_list="comments_list"/>
-        <button type="button" v-if='post.comments_number > 1' v-on:click="showAllComments">Afficher le reste des commentaires ({{post.comments_number - 1}})</button>
+        <button type="button" v-if='post.comments_number > 1' v-on:click="showAllComments" class="more-comments">Afficher le reste des commentaires ({{post.comments_number - 1}})</button>
     </article>
 </template>
 
@@ -46,10 +46,4 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-article {
-    border: orange solid 1px;
-    border-radius: 20px;
-    margin: 15px;
-    padding: 15px;
-}
 </style>

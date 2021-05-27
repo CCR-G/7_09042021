@@ -1,10 +1,11 @@
 <template>
     <form>
-        <label>Commenter
-            <textarea v-model='new_comment_content'></textarea>
-        </label>
+
+            <textarea aria-label="Entrez un commentaire" v-model='new_comment_content'></textarea>
+        <fieldset>
         <input type="reset" value="Annuler" v-on:click="cancel">
         <button v-on:click="addComment" type="button">Commenter</button>
+        </fieldset>
     </form>
 </template>
 

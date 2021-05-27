@@ -7,7 +7,7 @@
         <p>{{ post.content }}</p>
 
         <!--If too long : just css text-overflow:ellipsis and a button that changes that-->
-        <button v-if='post.content.length > 50'>Afficher la suite…</button>
+        <button v-if='post.content.length > 50' class="show-more-content">Afficher la suite…</button>
     </section>
 </template>
 
@@ -25,13 +25,4 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-    header p {
-        font-weight: bold;
-    }
-
-    button {
-        background-color: orange;
-        border-radius: 20px;
-        color: white;
-    }
 </style>
