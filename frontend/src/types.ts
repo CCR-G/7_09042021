@@ -22,8 +22,16 @@ export interface CommentType {
     post?: string;
 }
 
+export interface LoginCredentials {
+    email: string;
+    password: string;
+}
+
+export interface RegistrationInformation extends LoginCredentials {
+    username: string;
+}
+
 export interface User {
-    name?: string,
-    email: string,
-    password: string,
+    email: string;
+    username: string;
 }

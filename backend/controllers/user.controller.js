@@ -20,22 +20,27 @@ exports.create = (req, res) => {
             });
 
             // Save User in the database
-            User.create(user, (err, data) => {
-                if (err)
-                    res.status(500).send({
-                        message:
-                            err.message || "Some error occurred while creating the User."
-                    });
-                else res.send(data);
+            User.create(user, (err, created_user) => {
+                if (err) {
+                    return res.status(500).send({ message: err.message || "Some error occurred while creating the User." });
+                }
+                else {
+                    const token = jwt.sign(
+                        { email: created_user.email, username: created_user.username },
+                        process.env.TOKEN_SECRET_KEY,
+                        { expiresIn: '1h' }
+                    )
+                    return res.status(200).json({ username: created_user.username, email: created_user.email, token: token });
+                }
             });
         })
         .catch((err) => {
             console.log("Could not create hashed password");
             console.log(err);
-        })
+        });
 };
 
-exports.findOne = (req, res) => {
+exports.login = (req, res) => {
     // Validate request
     if (!req.body) {
         return res.status(400).send({ message: "Request content can not be empty!" });
@@ -65,14 +70,12 @@ exports.findOne = (req, res) => {
                 }
 
                 const token = jwt.sign(
-                    { user_email: user.email },
+                    { email: user.email, username: user.username },
                     process.env.TOKEN_SECRET_KEY,
                     { expiresIn: '1h' }
                 )
-
-                return res.status(200).json({ username: user.username, token: token });
+                return res.status(200).json({ username: user.username, email: user.email, token: token });
             })
             .catch(error => { res.status(500).send({ error }) });
-        //Should be caught, and not go to front end
     });
 }

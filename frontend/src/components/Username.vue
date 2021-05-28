@@ -3,10 +3,12 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue, Prop } from "vue-property-decorator";
+    import { Component, Vue } from "vue-property-decorator";
 
     @Component
     export default class Username extends Vue {
-        @Prop() private username!: string;
+        get username() {
+            return this.$store.state.user.username;
+        }
     }
 </script>

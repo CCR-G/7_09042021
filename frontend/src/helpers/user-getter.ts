@@ -1,31 +1,51 @@
-import { User } from '../types';
+import { RegistrationInformation, LoginCredentials, User } from '../types';
 import { getHttpHeaders } from './http-header-getter';
 
-export async function postNewUser(user: User) {
+export async function postNewUser(registration_info: RegistrationInformation): Promise<{ user: User, token: string }> {
     const request = await fetch(`http://localhost:3000/user/register`, {
         method: "POST",
-        body: JSON.stringify({ username: user.name, email: user.email, userpassword: user.password }),
+        body: JSON.stringify({ username: registration_info.username, email: registration_info.email, userpassword: registration_info.password }),
         headers: getHttpHeaders()
     });
+
+    const response = await request.json();
   
     if (!request.ok) {
-        const request_message = await request.json();
-        throw new Error(`Error ${request.status} : ${request_message.error}.`);
+        throw new Error(`Error ${request.status} : ${response.error}.`);
     }
+
+    const registered_user = { email: response.email, username: response.username }
+    return { user: registered_user, token: response.token };
   }
   
-export async function loginUser(user: User) {
+export async function loginUser(user: LoginCredentials): Promise<{ user: User, token: string }> {
     const request = await fetch(`http://localhost:3000/user/login`, {
         method: "POST",
         body: JSON.stringify({ email: user.email, password: user.password }),
         headers: getHttpHeaders()
     });
   
-    const request_message = await request.json();
+    const response = await request.json();
 
     if (!request.ok) {
-        throw new Error(`Error ${request.status} : ${request_message.error}`);
+        throw new Error(`Error ${request.status} : ${response.error}`);
     }
 
-    return request_message;
+    const logged_in_user = { email: response.email, username: response.username }
+    return { user: logged_in_user, token: response.token };
+}
+
+export async function authenticateUser(): Promise<User> {
+    const request = await fetch(`http://localhost:3000/user/authenticate`, {
+        method: "POST",
+        headers: getHttpHeaders()
+    });
+  
+    const response = await request.json();
+
+    if (!request.ok) {
+        throw new Error(`Error ${request.status} : ${response.error}`);
+    }
+
+    return { email: response.email, username: response.username };
 }

@@ -3,22 +3,46 @@
     <header>
       <Logo />
       <Menu />
+      <Username />
     </header>
 
     <router-view />
   </div>
 </template>
 
-<script>
-  import Logo from "@/components/Logo.vue";
-  import Menu from "@/components/Menu.vue";
+<script lang="ts">
+  import { Component, Vue } from "vue-property-decorator";
+  import Logo from "./components/Logo.vue";
+  import Menu from "./components/Menu.vue";
+  import Username from "./components/Username.vue";
+  import router from './router';
+  import { getToken } from './helpers/token-getter';
+  import { authenticateUser } from './helpers/user-getter';
 
-  export default {
-    name: "App",
-    components: {
-      Logo,
-      Menu
-    },
+  @Component({
+      components: { Logo, Menu, Username }
+    })
+  export default class App extends Vue {
+    mounted() {
+      if(getToken()) {
+        authenticateUser()
+          .then((user) => {
+            this.$store.dispatch('setUser', { username: user.username, email: user.email });
+          })
+          .catch((err) => {
+            this.unauthenticate();
+          })
+      }
+      else {
+        this.unauthenticate();
+      }
+    }
+
+    unauthenticate() {
+      this.$store.dispatch('setUser', { username: '', email: '' });
+      sessionStorage.clear();
+      router.replace("login");
+    }
   };
 </script>
 

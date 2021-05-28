@@ -28,6 +28,7 @@
             if ((this.$route.path !== "/login") && (this.$route.path !== "/register")) {
                 router.replace("/login");
             }
+            this.$store.dispatch('setUser', { username: '', email: '' });
         }
     }
 </script>
