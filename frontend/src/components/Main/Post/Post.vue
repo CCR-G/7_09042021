@@ -5,7 +5,7 @@
         <button v-if="!show_comment_form" v-on:click="displayCommentForm">Ajouter un commentaire</button>
         <NewComment v-if="show_comment_form" v-bind:post='post' v-on:cancel="show_comment_form = false" v-on:new-comment-posted="addComment"/>
 
-        <CommentsList v-if="post.comments_number > 0" v-bind:comments_list="comments_list"/>
+        <CommentsList v-if="post.comments_number > 0" v-bind:comments_list="this.post.comments"/>
         <button type="button" v-if='post.comments_number > 1' v-on:click="showAllComments" class="more-comments">Afficher le reste des commentaires ({{post.comments_number - 1}})</button>
     </article>
 </template>
@@ -30,16 +30,19 @@
         private show_all_comments = false;
         private show_comment_form = false;
 
-        private comments_list = this.post.comments;
-
         displayCommentForm() {
             this.show_comment_form = true;
             this.show_all_comments = true;
         }
 
         showAllComments() {
-            getAllComments(this.post.id).then(comments => this.comments_list = comments);
+            getAllComments(this.post.id).then(comments => this.post.comments = comments);
             this.show_all_comments = true;
+        }
+
+        addComment(new_comment) {
+            this.post.comments_number ++;
+            this.post.comments.unshift(new_comment);
         }
     }
 </script>

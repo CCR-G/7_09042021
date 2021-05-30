@@ -17,8 +17,20 @@ Comment.create = (newComment, result) => {
             return;
         }
 
-        console.log("created post: ", { id: res.insertId, ...newComment });
-        result(null, { id: res.insertId, ...newComment });
+        console.log("created comment: ", { id: res.insertId, ...newComment });
+
+        sql.query(`SELECT username FROM Users WHERE id = ${newComment.user};`, (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                result(err, null);
+                return;
+            }
+
+            console.log("comment's author: ", res[0].username);
+
+            console.log("created comment: ", { author: res[0].username, content: newComment.content });
+            result(null, { author: res[0].username, content: newComment.content });
+        });
     });
 };
 
