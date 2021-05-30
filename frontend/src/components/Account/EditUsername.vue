@@ -3,7 +3,7 @@
         <form>
             <label>
                 Nom d'utilisateur
-                <input type="text" v-model="user.name">
+                <input type="text" v-model="user.username">
             </label>
             <button type="submit">Modifier</button>
         </form>

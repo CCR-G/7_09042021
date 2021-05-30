@@ -25,12 +25,22 @@ exports.create = (req, res) => {
                     return res.status(500).send({ message: err.message || "Some error occurred while creating the User." });
                 }
                 else {
-                    const token = jwt.sign(
-                        { email: created_user.email, username: created_user.username },
+                    const token = jwt.sign({
+                        user_id: created_user.id,
+                        email: created_user.email,
+                        username: created_user.username
+                    },
                         process.env.TOKEN_SECRET_KEY,
                         { expiresIn: '1h' }
                     )
-                    return res.status(200).json({ username: created_user.username, email: created_user.email, token: token });
+                    return res.status(200).json({
+                        user: {
+                            user_id: created_user.id,
+                            username: created_user.username,
+                            email: created_user.email,
+                        },
+                        token: token
+                    });
                 }
             });
         })
@@ -69,12 +79,22 @@ exports.login = (req, res) => {
                     return res.status(401).send({ error: 'Mot de passe incorrect !' });
                 }
 
-                const token = jwt.sign(
-                    { email: user.email, username: user.username },
+                const token = jwt.sign({
+                    user_id: user.id,
+                    email: user.email,
+                    username: user.username
+                },
                     process.env.TOKEN_SECRET_KEY,
                     { expiresIn: '1h' }
                 )
-                return res.status(200).json({ username: user.username, email: user.email, token: token });
+                return res.status(200).json({
+                    user: {
+                        user_id: user.id,
+                        username: user.username,
+                        email: user.email,
+                    },
+                    token: token
+                });
             })
             .catch(error => { res.status(500).send({ error }) });
     });

@@ -14,8 +14,7 @@ export async function postNewUser(registration_info: RegistrationInformation): P
         throw new Error(`Error ${request.status} : ${response.error}.`);
     }
 
-    const registered_user = { email: response.email, username: response.username }
-    return { user: registered_user, token: response.token };
+    return response;
   }
   
 export async function loginUser(user: LoginCredentials): Promise<{ user: User, token: string }> {
@@ -31,8 +30,7 @@ export async function loginUser(user: LoginCredentials): Promise<{ user: User, t
         throw new Error(`Error ${request.status} : ${response.error}`);
     }
 
-    const logged_in_user = { email: response.email, username: response.username }
-    return { user: logged_in_user, token: response.token };
+    return response;
 }
 
 export async function authenticateUser(): Promise<User> {
@@ -47,5 +45,5 @@ export async function authenticateUser(): Promise<User> {
         throw new Error(`Error ${request.status} : ${response.error}`);
     }
 
-    return { email: response.email, username: response.username };
+    return response.user;
 }

@@ -27,7 +27,7 @@
       if(getToken()) {
         authenticateUser()
           .then((user) => {
-            this.$store.dispatch('setUser', { username: user.username, email: user.email });
+            this.$store.dispatch('setUser', user);
           })
           .catch((err) => {
             this.unauthenticate();
