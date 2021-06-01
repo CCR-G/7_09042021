@@ -1,7 +1,7 @@
 import { CommentType } from "@/types";
 import { getHttpHeaders } from './http-header-getter';
   
-export async function postNewComment(comment: CommentType): Promise<CommentType> {
+export async function postNewComment(comment: CommentType): Promise<CommentType> { // Correct return type ? 
   const request = await fetch(`http://localhost:3000/posts/${comment.post}/comments`, {
       method: "POST",
       body: JSON.stringify({ content: comment.content, user_id: comment.author, post_id: comment.post }),
