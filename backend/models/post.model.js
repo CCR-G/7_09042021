@@ -9,8 +9,10 @@ class Post {
 };
 
 Post.create = (newPost, result) => {
-    const query = `INSERT INTO Posts (content, user, postdate) VALUES ('${newPost.content}', ${newPost.user}, CURRENT_TIMESTAMP)`
-    sql.query(query, newPost, (err, res) => {
+    const query = 'INSERT INTO Posts (content, user, postdate) VALUES (?, ?, CURRENT_TIMESTAMP)';
+    const inserts = [newPost.content, newPost.user];
+
+    sql.query(query, inserts, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);

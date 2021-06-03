@@ -15,13 +15,11 @@ exports.create = (req, res) => {
     });
 
     // Save Post in the database
-    Post.create(post, (err, data) => {
-        if (err)
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while creating the Post."
-            });
-        else res.send(data);
+    Post.create(post, (err, created_post) => {
+        if (err) {
+            res.status(500).send({ message: err.message || "Some error occurred while creating the Post." });
+        }
+        else res.status(200).json(created_post);
     });
 };
 
