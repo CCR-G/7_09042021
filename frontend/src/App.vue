@@ -2,8 +2,8 @@
   <div id="app">
     <header>
       <Logo />
-      <Menu />
-      <Username />
+      <Menu v-bind:isLoggedIn="isLoggedIn"/>
+      <Username v-if="username" v-bind:username="username" />
     </header>
 
     <router-view />
@@ -18,11 +18,20 @@
   import router from './router';
   import { getToken } from './helpers/token-getter';
   import { authenticateUser } from './helpers/user-getter';
+  import { clearSession } from './helpers/clear-session';
 
   @Component({
       components: { Logo, Menu, Username }
     })
   export default class App extends Vue {
+    get username() {
+      return this.$store.state.user.username;
+    }
+
+    get isLoggedIn() {
+      return !!this.$store.state.user.id;
+    }
+
     mounted() {
       if(getToken()) {
         authenticateUser()
@@ -39,9 +48,7 @@
     }
 
     unauthenticate() {
-      this.$store.dispatch('setUser', { username: '', email: '' });
-      sessionStorage.clear();
-      router.replace("login");
+      clearSession();
     }
   };
 </script>

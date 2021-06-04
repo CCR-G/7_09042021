@@ -21,6 +21,10 @@ export default new Vuex.Store({
   actions: {
     setUser({ commit }, user) {
       commit('mutateUser', user)
+    },
+
+    clearUser({ commit }) {
+      commit('mutateUser', { id: '', username: '', email: '' })
     }
   },
   modules: {},
