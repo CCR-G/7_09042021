@@ -17,10 +17,8 @@
 
 <script lang="ts">
     import { Prop, Component, Vue } from "vue-property-decorator";
-    import router from '../router/index';
-    import { clearSession } from '../helpers/clear-session';
 
-  @Component()
+  @Component({})
   export default class Header extends Vue {
     get username() {
       return this.$store.state.user.username;
@@ -32,10 +30,6 @@
     
     get currentRoute() {
         return this.$route.path;
-    }
-
-    logout():void {
-        clearSession();
     }
   };
 </script>

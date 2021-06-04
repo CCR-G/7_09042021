@@ -33,6 +33,7 @@
 
         logout():void {
             clearSession();
+            this.$router.replace("/login");
         }
     }
 </script>
