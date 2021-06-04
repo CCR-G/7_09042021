@@ -99,3 +99,43 @@ exports.login = (req, res) => {
             .catch(error => { res.status(500).send({ error }) });
     });
 }
+
+exports.delete = (req, res) => {
+    // Validate request
+    if (!req.body) {
+        return res.status(400).send({ error: "Request content can not be empty!" });
+    }
+
+    if (!req.params.userId) {
+        return res.status(400).send({ error: 'Request must contain a user id' });
+    }
+
+    if (!req.body.password) {
+        return res.status(400).send({ error: 'Password field cannot be empty' });
+    }
+
+    User.getOneById(req.params.userId, (err, user) => {
+        if (err) {
+            return res.status(500).send({ message: err.message || "Some error occurred while retrieving the user." });
+        }
+
+        if (!user) {
+            return res.status(401).send({ error: 'Utilisateur non trouvé !' });
+        }
+
+        bcrypt.compare(req.body.password, user.userpassword)
+            .then(valid => {
+                if (!valid) {
+                    return res.status(401).send({ error: 'Mot de passe incorrect !' });
+                }
+
+                User.delete(user.id, (err) => {
+                    if (err) {
+                        return res.status(500).send({ message: err.message || "Some error occured while deleted the user."})
+                    }
+                    return res.status(200).send({ message: "User fully deleted with all related posts and comments." });
+                });
+            })
+            .catch(error => { res.status(500).send({ error }) });
+    });
+}

@@ -47,3 +47,19 @@ export async function authenticateUser(): Promise<User> {
 
     return response.user;
 }
+
+export async function deleteUser(user_id, user_password): Promise {
+    const request = await fetch(`http://localhost:3000/user/${user_id}/delete`, {
+        method: "POST",
+        body: JSON.stringify({ password: user_password }),
+        headers: getHttpHeaders()
+    });
+
+    const response = await request.json();
+
+    if (!request.ok) {
+        throw new Error(`Error ${request.status} : ${response.error}`);
+    }
+
+    return response;
+}

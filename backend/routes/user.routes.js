@@ -5,5 +5,6 @@ module.exports = app => {
 
     app.post("/user/register", users.create);
     app.post("/user/login", users.login);
-    app.post("/user/authenticate", auth);
+    app.post("/user/authenticate", auth, users.login);
+    app.post("/user/:userId/delete", auth, users.delete);
 };
