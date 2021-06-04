@@ -1,0 +1,27 @@
+.button, input[type="button"] {
+    border-radius: 7px;
+    border: solid orangered 2px;
+    padding: 5px 15px;
+    background-color: orangered;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.1);
+    margin-left: 15px;
+}
+
+input[type="reset"] {
+    border-radius: 7px;
+    border: solid orangered 2px;
+    padding: 5px 15px;
+    background-color: white;
+    font-weight: bold;
+    color: orangered;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.1);
+    margin-left: 15px;
+  }
+
+.save-cancel-buttons {
+    text-align: right;
+    border: none;
+    padding: 0;
+}

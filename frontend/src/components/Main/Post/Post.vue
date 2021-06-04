@@ -2,11 +2,11 @@
     <article>
         <PostContent v-bind:post='post' />
 
-        <button v-if="!show_comment_form" v-on:click="displayCommentForm">Ajouter un commentaire</button>
+        <button v-if="!show_comment_form" v-on:click="displayCommentForm" class="button">Ajouter un commentaire</button>
         <NewComment v-if="show_comment_form" v-bind:post='post' v-on:cancel="show_comment_form = false" v-on:new-comment-posted="addComment"/>
 
         <CommentsList v-if="post.comments_number > 0" v-bind:comments_list="this.post.comments"/>
-        <button type="button" v-if='post.comments_number > 1' v-on:click="showAllComments" class="more-comments">Afficher le reste des commentaires ({{post.comments_number - 1}})</button>
+        <button type="button" v-if='post.comments_number > 1' v-on:click="showAllComments" class="button more-comments">Afficher le reste des commentaires ({{post.comments_number - 1}})</button>
     </article>
 </template>
 

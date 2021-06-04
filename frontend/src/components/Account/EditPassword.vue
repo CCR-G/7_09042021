@@ -1,6 +1,6 @@
 <template>
     <section>
-        <button type="button" v-if="!is_editing" v-on:click="toggleEditingForm">Modifier le mot de passe</button>
+        <button type="button" v-if="!is_editing" v-on:click="toggleEditingForm" class="button">Modifier le mot de passe</button>
 
         <form v-if="is_editing">
             <label>
@@ -11,8 +11,8 @@
                 Nouveau mot de passe
                 <input type="password">
             </label>
-            <button type="submit">Modifier</button>
-            <button type="reset" v-on:click="toggleEditingForm">Annuler</button>
+            <button type="submit" class="button">Modifier</button>
+            <button type="reset" v-on:click="toggleEditingForm" class="button">Annuler</button>
         </form>
 
         <p v-if="has_been_edited">Le mot de passe a été modifié avec succès</p>

@@ -5,7 +5,7 @@
             <textarea aria-labelledby="write-post-title" v-model="content"></textarea>
             <fieldset class="save-cancel-buttons">
                 <input type="reset" value="Effacer">
-                <button type="button" v-on:click="createPost">Poster</button>
+                <button type="button" v-on:click="createPost" class="button">Poster</button>
             </fieldset>
             <p v-if="error">{{ error }}</p>
         </form>

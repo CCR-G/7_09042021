@@ -3,7 +3,7 @@
             <textarea aria-label="Entrez un commentaire" v-model='new_comment.content'></textarea>
         <fieldset>
             <input type="reset" value="Annuler" v-on:click="cancel">
-            <button v-on:click="addComment" type="button">Commenter</button>
+            <button v-on:click="addComment" type="button" class="button">Commenter</button>
         </fieldset>
         <p v-if="error">{{ error }}</p>
     </form>

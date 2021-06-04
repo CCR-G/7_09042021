@@ -5,7 +5,7 @@
                 Nom d'utilisateur
                 <input type="text" v-model="user.username">
             </label>
-            <button type="submit">Modifier</button>
+            <button type="submit" class="button">Modifier</button>
         </form>
     </section>
 </template>

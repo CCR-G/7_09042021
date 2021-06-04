@@ -1,0 +1,44 @@
+section > form {
+    border: 2px lightgray solid;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+    textarea {
+        margin-bottom: 20px;
+    }
+}
+
+article {
+    form {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        textarea {
+            width: 100%;
+            background-color: lightgray;
+            border: none;
+        }
+
+        fieldset {
+            border: none;
+            padding: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-content: space-between;
+            padding: 0;
+            margin-left: 15px;
+
+            button, input[type='reset'] {
+                margin: 0;
+                width: 100%;
+            }
+
+            button {
+                margin-top: 10px;
+            }
+        }
+    }
+}

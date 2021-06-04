@@ -15,7 +15,7 @@
                 Mot de passe
                 <input type="password" v-model='user.password'>
             </label>
-            <button type="button" v-on:click="createNewUser">Inscription</button>
+            <button type="button" v-on:click="createNewUser" class="button">Inscription</button>
             <p v-if="error">{{ error }}</p>
         </form>
     </div>

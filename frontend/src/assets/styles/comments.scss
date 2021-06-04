@@ -1,0 +1,23 @@
+.comments-section {
+    width: 100%;
+}
+
+.comments-list {
+    border-left: orangered 3px solid;
+    padding-left: 20px;
+
+    li {
+        list-style: none;
+        margin: 25px 0;
+
+        > p {
+            background-color: lightgray;
+            border-radius: 5px;
+            padding: 10px;
+        }
+    }
+}
+
+.more-comments {
+    align-self: flex-end;
+}

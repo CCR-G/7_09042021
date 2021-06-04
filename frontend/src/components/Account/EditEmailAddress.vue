@@ -5,7 +5,7 @@
                 Adresse e-mail
                 <input type="email" v-model="user.email">
             </label>
-            <button type="submit">Modifier</button>
+            <button type="submit" class="button">Modifier</button>
         </form>
     </section>
 </template>
