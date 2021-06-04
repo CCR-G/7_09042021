@@ -1,54 +1,28 @@
 <template>
   <div id="app">
-    <header>
-      <Logo />
-      <Menu v-bind:isLoggedIn="isLoggedIn"/>
-      <Username v-if="username" v-bind:username="username" />
-    </header>
-
+    <Header />
     <router-view />
   </div>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from "vue-property-decorator";
-  import Logo from "./components/Logo.vue";
-  import Menu from "./components/Menu.vue";
-  import Username from "./components/Username.vue";
-  import router from './router';
+
+  import Header from "./components/Header/Header.vue";
+
   import { getToken } from './helpers/token-getter';
   import { authenticateUser } from './helpers/user-getter';
   import { clearSession } from './helpers/clear-session';
 
-  @Component({
-      components: { Logo, Menu, Username }
-    })
+  @Component({ components: { Header } })
   export default class App extends Vue {
-    get username() {
-      return this.$store.state.user.username;
-    }
-
-    get isLoggedIn() {
-      return !!this.$store.state.user.id;
-    }
-
     mounted() {
-      if(getToken()) {
+      if( getToken() ) {
         authenticateUser()
-          .then((user) => {
-            this.$store.dispatch('setUser', user);
-          })
-          .catch((err) => {
-            this.unauthenticate();
-          })
+          .then(user => this.$store.dispatch('setUser', user))
+          .catch( clearSession() );
       }
-      else {
-        this.unauthenticate();
-      }
-    }
-
-    unauthenticate() {
-      clearSession();
+      else clearSession();
     }
   };
 </script>
