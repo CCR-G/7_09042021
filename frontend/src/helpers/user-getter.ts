@@ -4,7 +4,7 @@ import { getHttpHeaders } from './http-header-getter';
 export async function postNewUser(registration_info: RegistrationInformation): Promise<{ user: User, token: string }> {
     const request = await fetch(`http://localhost:3000/user/register`, {
         method: "POST",
-        body: JSON.stringify({ username: registration_info.username, email: registration_info.email, userpassword: registration_info.password }),
+        body: JSON.stringify({ username: registration_info.username, email: registration_info.email, password: registration_info.password }),
         headers: getHttpHeaders()
     });
 
@@ -48,7 +48,7 @@ export async function authenticateUser(): Promise<User> {
     return response.user;
 }
 
-export async function deleteUser(user_id, user_password): Promise {
+export async function deleteUser(user_id: number, user_password: string): Promise<any> {
     const request = await fetch(`http://localhost:3000/user/${user_id}/delete`, {
         method: "POST",
         body: JSON.stringify({ password: user_password }),

@@ -8,7 +8,8 @@ export default new Vuex.Store({
     user: {
       id: '',
       username: '',
-      email: ''
+      email: '',
+      admin: false
     }
   },
   mutations: {
@@ -16,6 +17,7 @@ export default new Vuex.Store({
       state.user.id = user.user_id;
       state.user.username = user.username;
       state.user.email = user.email;
+      state.user.admin = user.admin;
     }
   },
   actions: {
@@ -24,7 +26,7 @@ export default new Vuex.Store({
     },
 
     clearUser({ commit }) {
-      commit('mutateUser', { id: '', username: '', email: '' })
+      commit('mutateUser', { id: '', username: '', email: '', admin: false })
     }
   },
   modules: {},

@@ -14,7 +14,8 @@ module.exports = (req, res, next) => {
                     user: {
                         user_id: decoded_token.user_id,
                         email: decoded_token.email,
-                        username: decoded_token.username
+                        username: decoded_token.username,
+                        admin: decoded_token.admin
                     }
                 });
             }

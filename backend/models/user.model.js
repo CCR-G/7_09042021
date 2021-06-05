@@ -2,9 +2,9 @@ const sql = require("../helpers/connection");
 
 class User {
     constructor(user) {
-    this.username = user.username;
-    this.email = user.email;
-    this.userpassword = user.userpassword;
+        this.username = user.username;
+        this.email = user.email;
+        this.userpassword = user.password;
     }
 };
 
@@ -30,7 +30,7 @@ User.getOneByEmail = (email, result) => {
                 return;
             }
 
-            console.log(`user with ${email} email adress : `, res[0]);
+            console.log(`user with ${email} email address : `, res[0]);
             result(null, res[0]);
         });
 };
@@ -86,7 +86,7 @@ User.delete = (user_id, result) => {
         }
 
         console.log(`User with id ${user_id} was deleted.`, res[0]);
-        
+
         result(null, res[0]);
     });
 }

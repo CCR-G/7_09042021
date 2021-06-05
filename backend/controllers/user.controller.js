@@ -6,17 +6,27 @@ const jwt = require('jsonwebtoken');
 exports.create = (req, res) => {
     // Validate request
     if (!req.body) {
-        res.status(400).send({
-            message: "Content can not be empty!"
-        });
+        return res.status(400).send({ message: "Request content can not be empty!" });
     }
 
-    bcrypt.hash(req.body.userpassword, 10)
+    if (!req.body.username) {
+        return res.status(400).send({ error: 'Username field cannot be empty' });
+    }
+
+    if (!req.body.email) {
+        return res.status(400).send({ error: 'Email field cannot be empty' });
+    }
+
+    if (!req.body.password) {
+        return res.status(400).send({ error: 'Password field cannot be empty' });
+    }
+
+    bcrypt.hash(req.body.password, 10)
         .then((hashed_password) => {
             const user = new User({
                 username: req.body.username,
                 email: req.body.email,
-                userpassword: hashed_password
+                password: hashed_password
             });
 
             // Save User in the database
@@ -28,7 +38,8 @@ exports.create = (req, res) => {
                     const token = jwt.sign({
                         user_id: created_user.id,
                         email: created_user.email,
-                        username: created_user.username
+                        username: created_user.username,
+                        admin: user.admin.includes(1)
                     },
                         process.env.TOKEN_SECRET_KEY,
                         { expiresIn: '1h' }
@@ -38,6 +49,7 @@ exports.create = (req, res) => {
                             user_id: created_user.id,
                             username: created_user.username,
                             email: created_user.email,
+                            admin: user.admin.includes(1)
                         },
                         token: token
                     });
@@ -82,7 +94,8 @@ exports.login = (req, res) => {
                 const token = jwt.sign({
                     user_id: user.id,
                     email: user.email,
-                    username: user.username
+                    username: user.username,
+                    admin: user.admin.includes(1)
                 },
                     process.env.TOKEN_SECRET_KEY,
                     { expiresIn: '1h' }
@@ -92,6 +105,7 @@ exports.login = (req, res) => {
                         user_id: user.id,
                         username: user.username,
                         email: user.email,
+                        admin: user.admin.includes(1)
                     },
                     token: token
                 });
@@ -131,11 +145,11 @@ exports.delete = (req, res) => {
 
                 User.delete(user.id, (err) => {
                     if (err) {
-                        return res.status(500).send({ message: err.message || "Some error occured while deleted the user."})
+                        return res.status(500).send({ message: err.message || "Some error occured while deleted the user." })
                     }
                     return res.status(200).send({ message: "User fully deleted with all related posts and comments." });
                 });
             })
-            .catch(error => { res.status(500).send({ error }) });
+            .catch(error => { res.status(500).send({ error: "Could not compare passwords." }) });
     });
 }
