@@ -80,4 +80,27 @@ Post.getAll = result => {
     });
 };
 
+Post.delete = (post_id, result) => {
+    sql.query(`DELETE Comments FROM Comments WHERE Comments.post = ?;`, post_id, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        console.log(`Comments with post id ${post_id} were deleted`, res[0]);
+    });
+
+    sql.query(`DELETE FROM Posts WHERE id = ?;`, post_id, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        console.log(`Post with id ${post_id} was deleted.`, res[0]);
+        result(null, res[0]);
+    });
+}
+
 module.exports = Post;

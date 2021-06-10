@@ -2,9 +2,14 @@
   <section>
     <h1>Fil d'actualité</h1>
     <p v-if="posts.length === 0">There are no post to show.</p>
-    <div v-for="post in posts" v-bind:key="post.post_id">
-        <Post v-bind:post='post' />
-    </div>
+    <article
+      is="Post"
+      v-for="(post, index) in posts"
+      v-bind:key="post.post_id"
+      v-bind:position_in_array="index"
+      v-bind:post='post'
+      v-on:post-deleted="deletePost"
+    />
   </section>
 </template>
 
@@ -22,9 +27,13 @@
       posts: PostClass[] = [];
 
       mounted() {
-        getPosts().then((result) => {
-          this.posts = result;
-        });
+        getPosts()
+          .then(result => this.posts = result)
+          .catch(() => console.log("COULD NOT RETRIEVE POSTS"));
+      }
+
+      deletePost(post_key_in_array: number) {
+        this.posts.splice(post_key_in_array, 1);
       }
     }
 </script>

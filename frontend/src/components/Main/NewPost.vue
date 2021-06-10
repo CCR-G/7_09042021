@@ -22,15 +22,25 @@
         error = '';
 
         get user() {
-            return 1;
+            return this.$store.state.user;
         }
 
         //should return true or something if created properly in db
         createPost(): void {
             //this.$emit('new-post-created', this.content);
-            postNewPost(this.content, this.user)
-                .then(() => {
+            postNewPost(this.content, this.user.id)
+                .then((post) => {
+                    this.$emit("new-post-created", {
+                        // We should use deconstruction (...) to replace only author to the response
+                        id: post.id,
+                        content: this.content,
+                        author: this.user,
+                        postdate: post.date,
+                        comments_number: 0,
+                        comments: []
+                    });
                     this.content = '';
+                    this.error = '';
                 })
                 .catch((err) => {
                     this.error = err.message;

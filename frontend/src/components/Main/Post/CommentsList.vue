@@ -26,7 +26,7 @@
         // an author, a date, a content, comments
         @Prop() private comments_list!: CommentType[];
 
-        deleteComment(comment_key_in_array) {
+        deleteComment(comment_key_in_array: number) {
             this.comments_list.splice(comment_key_in_array, 1);
         }
     }

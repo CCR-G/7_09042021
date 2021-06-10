@@ -1,6 +1,8 @@
 <template>
     <article>
         <PostContent v-bind:post='post' />
+        <button v-if="is_admin" v-on:click="erasePost" class="button delete-button">Supprimer</button>
+        <p>{{ error }}</p>
 
         <button
             v-if="!show_comment_form"
@@ -38,6 +40,7 @@
     import NewComment from './NewComment.vue';
     import CommentsList from './CommentsList.vue';
     import { getAllComments } from "../../../helpers/comment-getter";
+    import { deletePost } from "../../../helpers/post-getter";
 
     @Component({
       components: { PostContent, NewComment, CommentsList }
@@ -46,9 +49,12 @@
         //We need to create a Post class or interface that contains 
         // an author, a date, a content, comments
         @Prop() private post!: PostClass;
+        @Prop() private position_in_array!: number;
 
         private are_all_comments_shown = false;
         private show_comment_form = false;
+        private is_admin = this.$store.state.user.admin;
+        private error = '';
 
         mounted() {
             this.are_all_comments_shown = !(this.post.comments_number > 1);
@@ -67,6 +73,17 @@
         addComment(new_comment: CommentType) {
             this.post.comments_number ++;
             this.post.comments.unshift(new_comment);
+        }
+
+        erasePost() {
+            deletePost(this.post.id)
+                .then(() => {
+                    this.$emit("post-deleted", this.position_in_array);
+                    this.error = '';
+                })
+                .catch((err) => {
+                    this.error = err.message;
+                })
         }
     }
 </script>

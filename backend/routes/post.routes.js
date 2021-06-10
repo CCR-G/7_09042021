@@ -5,4 +5,5 @@ module.exports = app => {
 
     app.post("/posts", auth.token, posts.create);
     app.get("/posts", auth.token, posts.findAll);
+    app.post("/posts/:postId/delete", auth.token, auth.admin, posts.delete);
 };

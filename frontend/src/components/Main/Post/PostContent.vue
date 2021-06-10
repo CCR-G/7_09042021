@@ -8,8 +8,6 @@
 
         <!--If too long : just css text-overflow:ellipsis and a button that changes that-->
         <button v-if='post.content.length > 50' class="show-more-content">Afficher la suite…</button>
-
-        <button v-if="is_admin" class="button delete-button">Supprimer</button>
     </section>
 </template>
 
@@ -22,8 +20,6 @@
         //We need to create a Post class or interface that contains 
         // an author, a date, a content, comments
         @Prop() private post!: PostClass;
-
-        private is_admin = this.$store.state.user.admin;
     }
 </script>
 

@@ -52,9 +52,27 @@ export async function postNewPost(content: string, author: number) {
       headers: getHttpHeaders()
   });
 
-  const request_message = await request.json();
+  const response = await request.json();
 
   if (!request.ok) {
-    throw new Error(`Error ${request.status} : ${request_message.error}`);
+    throw new Error(`Error ${request.status} : ${response.error}`);
   }
+
+  return response;
+}
+
+
+export async function deletePost(post_id: number): Promise<any> {
+  const request = await fetch(`http://localhost:3000/posts/${post_id}/delete`, {
+    method: "POST",
+    headers: getHttpHeaders()
+  });
+
+  const response = await request.json();
+
+  if (!request.ok) {
+    throw new Error(`Error ${request.status} : ${response.error}`);
+  }
+
+  return response;
 }

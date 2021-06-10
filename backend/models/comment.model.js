@@ -57,7 +57,7 @@ Comment.delete = (comment_id, result) => {
             return;
         }
 
-        console.log(`Comments with id ${comment_id} was deleted`, res[0]);
+        console.log(`Comment with id ${comment_id} was deleted`, res[0]);
         result(null, res[0]);
     });
 }

@@ -47,3 +47,21 @@ exports.findAll = (req, res) => {
         };
     });
 };
+
+exports.delete = (req, res) => {
+    if (!req.body) {
+        return res.status(400).send({ error: "Request content can not be empty!" });
+    }
+
+    const post_id = req.params.postId;
+    if (!post_id) {
+        return res.status(400).send({ error: 'Request must contain a post id' });
+    }
+
+    Post.delete(post_id, (err) => {
+        if (err) {
+            return res.status(500).send({ message: err.message || "Some error occured while deleting the post." })
+        }
+        return res.status(200).send({ message: `Post ${post_id} was deleted.` });
+    });
+}
