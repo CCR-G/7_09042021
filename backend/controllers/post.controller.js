@@ -33,7 +33,11 @@ exports.findAll = (req, res) => {
         else {
             data.forEach((post) => {
                 if (post.last_comment_content) {
-                    post.last_comment = { content: post.last_comment_content, author: post.last_comment_author };
+                    post.last_comment = {
+                        id: post.last_comment_id,
+                        content: post.last_comment_content,
+                        author: post.last_comment_author
+                    };
                 }
 
                 delete post.last_comment_content;

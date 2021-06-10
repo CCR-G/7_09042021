@@ -2,17 +2,37 @@
     <article>
         <PostContent v-bind:post='post' />
 
-        <button v-if="!show_comment_form" v-on:click="displayCommentForm" class="button">Ajouter un commentaire</button>
-        <NewComment v-if="show_comment_form" v-bind:post='post' v-on:cancel="show_comment_form = false" v-on:new-comment-posted="addComment"/>
+        <button
+            v-if="!show_comment_form"
+            v-on:click="displayCommentForm"
+            class="button"
+        >
+            Ajouter un commentaire
+        </button>
+        
+        <NewComment
+            v-if="show_comment_form"
+            v-bind:post='post'
+            v-on:cancel="show_comment_form = false"
+            v-on:new-comment-posted="addComment"
+        />
 
         <CommentsList v-if="post.comments_number > 0" v-bind:comments_list="this.post.comments"/>
-        <button type="button" v-if='post.comments_number > 1' v-on:click="showAllComments" class="button more-comments">Afficher le reste des commentaires ({{post.comments_number - 1}})</button>
+        
+        <button
+            type="button"
+            v-if='!are_all_comments_shown'
+            v-on:click="showAllComments"
+            class="button more-comments"
+        >
+            Afficher le reste des commentaires ({{ post.comments_number - 1 }})
+        </button>
     </article>
 </template>
 
 <script lang="ts">
     import { Component, Prop, Vue } from "vue-property-decorator";
-    import { PostClass } from "../../../types";
+    import { CommentType, PostClass } from "../../../types";
     
     import PostContent from './PostContent.vue';
     import NewComment from './NewComment.vue';
@@ -27,20 +47,24 @@
         // an author, a date, a content, comments
         @Prop() private post!: PostClass;
 
-        private show_all_comments = false;
+        private are_all_comments_shown = false;
         private show_comment_form = false;
+
+        mounted() {
+            this.are_all_comments_shown = !(this.post.comments_number > 1);
+        }
 
         displayCommentForm() {
             this.show_comment_form = true;
-            this.show_all_comments = true;
+            this.are_all_comments_shown = true;
         }
 
         showAllComments() {
             getAllComments(this.post.id).then(comments => this.post.comments = comments);
-            this.show_all_comments = true;
+            this.are_all_comments_shown = true;
         }
 
-        addComment(new_comment) {
+        addComment(new_comment: CommentType) {
             this.post.comments_number ++;
             this.post.comments.unshift(new_comment);
         }

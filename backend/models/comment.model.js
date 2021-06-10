@@ -25,6 +25,7 @@ Comment.create = (newComment, result) => {
 Comment.getAllById = (postId, result) => {
     sql.query(`
     SELECT 
+        Comments.id AS id,
         Comments.content AS content,
         comment_user.username AS author
         
@@ -47,5 +48,18 @@ Comment.getAllById = (postId, result) => {
         result(null, res);
     });
 };
+
+Comment.delete = (comment_id, result) => {
+    sql.query(`DELETE Comments FROM Comments WHERE id = ?;`, comment_id, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        console.log(`Comments with id ${comment_id} was deleted`, res[0]);
+        result(null, res[0]);
+    });
+}
 
 module.exports = Comment;

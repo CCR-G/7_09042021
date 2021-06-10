@@ -32,7 +32,7 @@
                 this.$emit("new-comment-posted",  { ...this.new_comment, author: this.$store.state.user.username });
                 this.new_comment.content = '';
             })
-            .catch(err => { this.error = err })
+            .catch(err => { this.error = err.message })
         }
 
         cancel() {

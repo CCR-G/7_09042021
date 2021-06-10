@@ -38,6 +38,13 @@ Post.getAll = result => {
             WHERE Posts.id = Comments.post
         ) AS "comments_number",
     
+        (SELECT Comments.id
+            FROM Comments
+            WHERE post_id = Comments.post
+            ORDER BY Comments.id DESC
+            LIMIT 1
+        ) AS "last_comment_id",
+        
         (SELECT Comments.content
     FROM Comments
             WHERE post_id = Comments.post

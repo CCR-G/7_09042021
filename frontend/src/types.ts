@@ -17,9 +17,10 @@ export class PostClass {
 }
 
 export interface CommentType {
-    author: string;
+    id?: number,
+    author: string | number;
     content: string;
-    post?: string;
+    post?: number;
 }
 
 export interface LoginCredentials {
