@@ -14,20 +14,16 @@ exports.create = (req, res) => {
     }
 
     const user_email = req.body.email;
-
-    if (!user_email) {
-        return res.status(400).send({ error: 'Le champ "email" ne peut être vide' });
+    if (!user_email || !utils.isEmailValid(user_email)) {
+        return res.status(400).send({ error: "L'adresse email n'est pas valide" });
     }
 
-    if (!utils.isEmailValid(user_email)) {
-        return res.status(400).send({ error: "L'adresse email n'est pas valide" })
+    const user_password = req.body.password;
+    if (!user_password || !utils.isPasswordValid(user_password)) {
+        return res.status(400).send({ error: "Le mot de passe doit contenir au minimum 8 caractères et contenir au moins une majuscule et une minuscule." });
     }
 
-    if (!req.body.password) {
-        return res.status(400).send({ error: 'Le champ de "mot de passe" ne peut être vide' });
-    }
-
-    bcrypt.hash(req.body.password, 10)
+    bcrypt.hash(user_password, 10)
         .then((hashed_password) => {
             const user = new User({
                 username: req.body.username,
