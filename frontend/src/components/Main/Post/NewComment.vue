@@ -1,8 +1,8 @@
 <template>
-    <form>
-            <textarea aria-label="Entrez un commentaire" v-model='new_comment.content'></textarea>
-        <fieldset>
-            <input type="reset" value="Annuler" v-on:click="cancel">
+    <form class="comment-form">
+        <textarea class="form-field new-comment-field" aria-label="Entrez un commentaire" v-model='new_comment.content'></textarea>
+        <fieldset class="new-comment-buttons">
+            <input type="reset" value="Annuler" v-on:click="cancel" class="button cancel">
             <button v-on:click="addComment" type="button" class="button">Commenter</button>
         </fieldset>
         <p v-if="error">{{ error }}</p>

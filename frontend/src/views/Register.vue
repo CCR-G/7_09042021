@@ -1,17 +1,17 @@
 <template>
     <div>
-        <h1>Créer un compte</h1>
+        <h1 class="connection-title">Créer un compte</h1>
 
-        <form>
-            <label>
+        <form class="connection-form">
+            <label class="connection-field">
                 Identifiant
                 <input type="text" v-model='user.username' />
             </label>
-            <label>
+            <label class="connection-field">
                 Adresse email
-                <input type="text" v-model='user.email' />
+                <input type="email" v-model='user.email' />
             </label>
-            <label>
+            <label class="connection-field">
                 Mot de passe
                 <input type="password" v-model='user.password'>
             </label>

@@ -1,0 +1,30 @@
+.button {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border: solid orangered 2px;
+    border-radius: 7px;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: 0.2s;
+
+    color: white;
+    background-color: orangered;
+
+    &.cancel {
+        color: orangered;
+        background-color: white;
+
+        &:hover {
+          color: rgb(56, 56, 56);
+          background-color: white;
+          border: solid grey 2px;
+        }
+    }
+
+    &:hover {
+      border: solid rgb(56, 56, 56) 2px;
+      background-color: white;
+      color: rgb(56, 56, 56);
+    }
+}

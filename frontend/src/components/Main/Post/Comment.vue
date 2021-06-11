@@ -1,9 +1,9 @@
 <template>
-    <li>
+    <li class="comment">
         <header>
-            <p>{{ comment.author }}</p>
+            <p class="comment-author">{{ comment.author }}</p>
         </header>
-        <p>{{ comment.content }}</p>
+        <p class="comment-text">{{ comment.content }}</p>
         <button v-if="is_admin" v-on:click="eraseComment" class="button delete-button">Supprimer</button>
         <p v-if="error">{{ error }}</p>
     </li>

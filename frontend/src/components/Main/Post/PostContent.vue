@@ -1,7 +1,7 @@
 <template>
-    <section>
-        <header>
-            <p>{{ post.author }}</p>
+    <div class="post-content">
+        <header class="post-header">
+            <p class="post-author">{{ post.author }}</p>
             <time v-bind:datetime=post.postdate>{{ post.postdate }}</time>
         </header>
 
@@ -16,9 +16,7 @@
 
         <p>{{ post.content }}</p>
 
-        <!--If too long : just css text-overflow:ellipsis and a button that changes that-->
-        <button v-if='post.content.length > 50' class="show-more-content">Afficher la suite…</button>
-    </section>
+    </div>
 </template>
 
 <script lang="ts">

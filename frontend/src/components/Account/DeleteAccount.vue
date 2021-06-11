@@ -1,14 +1,26 @@
 <template>
     <section>
-        <button type="button" v-if="!is_deleting" v-on:click="toggleDeletingForm" class="button">Supprimer le compte</button>
+        <button
+            type="button"
+            v-if="!is_deleting"
+            v-on:click="toggleDeletingForm"
+            class="button account-button"
+        >
+            Supprimer le compte
+        </button>
 
         <form v-else>
             <label>
                 Entrez votre mot de passe :
                 <input type="password" v-model="password">
             </label>
+
+            <fieldset class="delete-account-buttons">
             <button type="button" v-on:click="deleteAccount" class="button">Confirmer la suppression du compte</button>
-            <button type="reset" v-on:click="toggleDeletingForm" class="button">Annuler</button>
+                <button type="reset" v-on:click="toggleDeletingForm" class="button cancel">Annuler</button>
+            </fieldset>
+
+            <p>{{ error }}</p>
         </form>
     </section>
 </template>

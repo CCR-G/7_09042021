@@ -1,0 +1,38 @@
+.connection-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    margin: 0 auto;
+
+    .connection-field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 30px;
+        width: 100%;
+        font-size: 16px;
+
+        input {
+            height: 30px;
+            background-color: rgba(255, 68, 0, 0.2);
+            border: none;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 30px;
+        }
+    }
+}
+
+.account-button {
+    margin: 15px 0;
+}
+
+.delete-account-buttons {
+    border: none;
+    padding: 0;
+    margin-top: 10px;
+
+    > .button {
+        margin-right: 15px;
+    }
+}

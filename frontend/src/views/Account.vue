@@ -4,16 +4,15 @@
         <!--<EditUsername v-bind:user="user" />
         <EditEmailAddress v-bind:user="user" />
         <EditPassword v-bind:user="user" />-->
-        <button type="button" v-on:click="logout" class="button account-button">Logout</button>
-        <DeleteAccount v-bind:user="user" />
+        <button type="button" v-on:click="logout" class="button account-button">Fermer la session</button>
+        <DeleteAccount />
     </div>
 </template>
 
 <script lang="ts">
     import { Component, Vue } from "vue-property-decorator";
 
-    import { User } from "../types";
-
+    //import { User } from "../types";
     import { clearSession } from '../helpers/clear-session';
 
     import EditPassword from '../components/Account/EditPassword.vue';
@@ -25,12 +24,12 @@
       components: { EditUsername, EditEmailAddress, EditPassword, DeleteAccount }
     })
     export default class Main extends Vue {
-        user: User = {
+        /*user: User = {
             id: this.$store.state.user.id,
             username: this.$store.state.user.username,
             email: this.$store.state.user.email,
             admin: this.$store.state.user.admin
-        }
+        }*/
 
         logout():void {
             clearSession();

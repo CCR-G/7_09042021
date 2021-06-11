@@ -1,23 +1,26 @@
-.comments-section {
-    width: 100%;
-}
-
 .comments-list {
     border-left: orangered 3px solid;
+    margin-top: 30px;
     padding-left: 20px;
 
-    li {
+    .comment {
         list-style: none;
-        margin: 25px 0;
+        margin: 50px 0;
+        width: 100%;
 
-        > p {
+        .comment-author {
+            font-weight: bold;
+        }
+
+        > .comment-text {
             background-color: lightgray;
             border-radius: 5px;
-            padding: 10px;
+            padding: 10px 12px;
         }
     }
 }
 
 .more-comments {
     align-self: flex-end;
+    margin-top: 10px;
 }

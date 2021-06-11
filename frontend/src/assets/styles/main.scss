@@ -1,18 +1,20 @@
-@import './typography';
-@import './post';
-@import './forms';
-@import './button';
-@import './comments';
-@import './header';
+@import './utils/typography';
+@import './utils/button';
+@import './utils/form-field';
+
+@import './components/post';
+@import './components/forms';
+@import './components/comments';
+@import './components/header';
+@import './components/account';
 
 #app {
-    margin: 0 auto;
-    padding: 0 40px;
-    font-family: sans-serif;
-    max-width: 720px;
     display: flex;
+    max-width: 760px;
     flex-direction: column;
     align-items: stretch;
     justify-content: space-around;
+    margin: 0 auto;
+    padding: 0 40px;
 }
   

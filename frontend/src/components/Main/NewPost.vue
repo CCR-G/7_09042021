@@ -1,14 +1,14 @@
 <template>
     <section>
-        <h1 id="write-post-title">Rédiger un post</h1>
-        <form>
-            <textarea aria-labelledby="write-post-title" v-model="content"></textarea>
+        <form class="post-form">
+            <h1 id="write-post-title">Rédiger un article</h1>
+            <textarea class="form-field new-post-field" aria-labelledby="write-post-title" v-model="new_post.content" placeholder="Mon article rédigé…"></textarea>
 
             <label for="post-image-url">URL d'une image (optionnel) :</label>
-            <input class="post-image-url" id="post-image-url" type="url" placeholder="https://giphy.gif" v-model="new_post.image_url">
+            <input class="form-field new-post-field" id="post-image-url" type="url" placeholder="https://giphy.gif" v-model="new_post.image_url">
 
-            <fieldset class="save-cancel-buttons">
-                <input type="reset" value="Effacer">
+            <fieldset class="new-post-buttons">
+                <input type="reset" value="Effacer" class="button cancel">
                 <button type="button" v-on:click="createPost" class="button">Poster</button>
             </fieldset>
             <p v-if="error">{{ error }}</p>

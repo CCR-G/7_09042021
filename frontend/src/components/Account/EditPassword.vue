@@ -12,7 +12,7 @@
                 <input type="password">
             </label>
             <button type="submit" class="button">Modifier</button>
-            <button type="reset" v-on:click="toggleEditingForm" class="button">Annuler</button>
+            <button type="reset" v-on:click="toggleEditingForm" class="button cancel">Annuler</button>
         </form>
 
         <p v-if="has_been_edited">Le mot de passe a été modifié avec succès</p>

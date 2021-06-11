@@ -1,17 +1,19 @@
 <template>
-    <article>
+    <article class="post">
         <PostContent v-bind:post='post' />
-        <button v-if="is_admin" v-on:click="erasePost" class="button delete-button">Supprimer</button>
-        <p>{{ error }}</p>
+        <p v-if="error">{{ error }}</p>
 
+        <div v-if="!show_comment_form" class="post-action-buttons">
         <button
-            v-if="!show_comment_form"
             v-on:click="displayCommentForm"
             class="button"
         >
             Ajouter un commentaire
         </button>
         
+            <button v-if="is_admin" v-on:click="erasePost" class="button delete-button">Supprimer</button>
+        </div>
+
         <NewComment
             v-if="show_comment_form"
             v-bind:post='post'

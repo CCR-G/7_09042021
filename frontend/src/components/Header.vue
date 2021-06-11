@@ -7,11 +7,11 @@
         </div>
 
         <nav v-if="!isLoggedIn">
-            <router-link v-if="currentRoute !== '/register'" to="/register" class="connection">Register</router-link>
-            <router-link v-if="currentRoute !== '/login'" to="/login" class="connection">Login</router-link>
+            <router-link v-if="currentRoute !== '/register'" to="/register" class="button connection">Register</router-link>
+            <router-link v-if="currentRoute !== '/login'" to="/login" class="button connection">Login</router-link>
         </nav>
 
-        <router-link to="/account" v-if="username" class="user-icon" title="Go to your account page">{{ username }}</router-link>
+        <router-link to="/account" v-if="username" class="button account" title="Go to your account page">{{ username }}</router-link>
     </header>
 </template>
 
