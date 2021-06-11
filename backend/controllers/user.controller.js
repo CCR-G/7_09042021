@@ -25,7 +25,7 @@ exports.create = (req, res) => {
         .then((hashed_password) => {
             const user = new User({
                 username: req.body.username,
-                email: req.body.email,
+                email: req.body.email.toLowerCase(),
                 password: hashed_password
             });
 
@@ -73,7 +73,7 @@ exports.login = (req, res) => {
         return res.status(400).send({ error: 'Le champ de "mot de passe" ne peut être vide.' });
     }
 
-    User.getOneByEmail(req.body.email, (err, user) => {
+    User.getOneByEmail(req.body.email.toLowerCase(), (err, user) => {
         if (err) {
             return res.status(500).send({
                 message: err.message || "Une erreur est survenue lors de la récupération de l'utilisateur."
