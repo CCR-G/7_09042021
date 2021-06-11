@@ -1,14 +1,16 @@
 export class PostClass {
     id: number;
     content: string;
+    image_url?: string | null;
     author: string;
     postdate: string;
     comments_number: number;
     comments: CommentType[];
 
-    constructor(id: number, content: string, author: string, postdate: Date, comments_number: number, comments: CommentType[]) {
+    constructor(id: number, content: string, author: string, postdate: Date, comments_number: number, comments: CommentType[], image_url?: string | null) {
         this.id = id;
         this.content = content;
+        this.image_url = image_url;
         this.author = author;
         this.postdate = postdate.toLocaleString();
         this.comments_number = comments_number;

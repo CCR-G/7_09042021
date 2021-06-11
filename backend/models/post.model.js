@@ -4,7 +4,6 @@ class Post {
     constructor(post) {
         this.content = post.content;
         this.user = post.user;
-
     }
 };
 
@@ -27,17 +26,22 @@ Post.create = (newPost, result) => {
 Post.getAll = result => {
     sql.query(`
     SELECT
-    Posts.id AS post_id,
-    Posts.content AS post_content,
-    Posts.postdate AS post_date,
-    post_user.username AS post_author,
-    
+        Posts.id AS post_id,
+        Posts.content AS post_content,
+        Posts.postdate AS post_date,
+        post_user.username AS post_author,
+        
         (SELECT
             COUNT(*)
             FROM Comments
             WHERE Posts.id = Comments.post
         ) AS "comments_number",
-    
+
+        (SELECT Images.url
+            FROM Images
+            WHERE post_id = Images.post
+        ) AS "image_url",
+
         (SELECT Comments.id
             FROM Comments
             WHERE post_id = Comments.post
@@ -46,26 +50,26 @@ Post.getAll = result => {
         ) AS "last_comment_id",
         
         (SELECT Comments.content
-    FROM Comments
+            FROM Comments
             WHERE post_id = Comments.post
             ORDER BY Comments.id DESC
             LIMIT 1
         ) AS "last_comment_content",
-    
+        
         (SELECT comment_user.username
             FROM Comments
-    LEFT JOIN Users AS comment_user
-    ON Comments.user = comment_user.id
+            LEFT JOIN Users AS comment_user
+                ON Comments.user = comment_user.id
             WHERE post_id = Comments.post
             ORDER BY Comments.id DESC
             LIMIT 1
         ) AS "last_comment_author"
         
         FROM Posts
-    
-    LEFT JOIN Users AS post_user
-    ON Posts.user = post_user.id
-    
+        
+        LEFT JOIN Users AS post_user
+            ON Posts.user = post_user.id
+        
         ORDER BY Posts.id DESC
 	;
     `, (err, res) => {
@@ -91,6 +95,16 @@ Post.delete = (post_id, result) => {
         console.log(`Comments with post id ${post_id} were deleted`, res[0]);
     });
 
+    sql.query(`DELETE FROM Images WHERE post = ?;`, post_id, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        console.log(`Image with id ${post_id} was deleted.`, res[0]);
+    });
+
     sql.query(`DELETE FROM Posts WHERE id = ?;`, post_id, (err, res) => {
         if (err) {
             console.log("error: ", err);
@@ -100,6 +114,22 @@ Post.delete = (post_id, result) => {
 
         console.log(`Post with id ${post_id} was deleted.`, res[0]);
         result(null, res[0]);
+    });
+}
+
+Post.addImage = (post_id, image_id, result) => {
+    const query = `UPDATE Posts SET image = ? WHERE id = ?;`;
+    const inserts = [image_id, post_id];
+
+    sql.query(query, inserts, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+
+        console.log("edited post: ", { id: res.insertId });
+        result(null, { id: res.insertId });
     });
 }
 

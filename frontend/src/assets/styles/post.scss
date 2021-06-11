@@ -10,6 +10,20 @@ article {
     header p {
         font-weight: bold;
         margin: 0;
+
+    .post-image-container {
+        max-height: 350px;
+        border-radius: 10px;
+        overflow: hidden;
+        object-fit: fill;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .post-image {
+        width: 100%;
+    }
     }
 
     button {

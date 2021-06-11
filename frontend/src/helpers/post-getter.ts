@@ -16,6 +16,7 @@ export async function getPosts(): Promise<PostClass[]> {
     json_posts_list.forEach((json_post: JSONPost) => {
       const id = json_post.post_id;
       const content = json_post.post_content;
+      const image_url = json_post.image_url;
       const author = json_post.post_author;
       const date = new Date(json_post.post_date);
       const comments_number = json_post.comments_number;
@@ -27,7 +28,8 @@ export async function getPosts(): Promise<PostClass[]> {
         author,
         date,
         comments_number,
-        comments
+        comments,
+        image_url
       )
 
       posts_list.push(new_post);
@@ -39,16 +41,17 @@ export async function getPosts(): Promise<PostClass[]> {
 type JSONPost = {
   post_id: number;
   post_content: string;
+  image_url: string | null;
   post_author: string;
   post_date: string;
   comments_number: number;
   last_comment: CommentType;
 }
 
-export async function postNewPost(content: string, author: number) {
+export async function postNewPost(content: string, author: number, image_url: string | null = null) {
   const request = await fetch(`http://localhost:3000/posts`, {
       method: "POST",
-      body: JSON.stringify({ content: content, user: author }),
+      body: JSON.stringify({ content: content, user: author, image_url: image_url }),
       headers: getHttpHeaders()
   });
 
