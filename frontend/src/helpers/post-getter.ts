@@ -13,6 +13,7 @@ export async function getPosts(): Promise<PostClass[]> {
     const posts_list: PostClass[] = [];
 
     const json_posts_list = await api_response.json();
+
     json_posts_list.forEach((json_post: JSONPost) => {
       const id = json_post.post_id;
       const content = json_post.post_content;
@@ -20,7 +21,7 @@ export async function getPosts(): Promise<PostClass[]> {
       const author = json_post.post_author;
       const date = new Date(json_post.post_date);
       const comments_number = json_post.comments_number;
-      const comments = [json_post.last_comment];
+      const comments = json_post.last_comment ? [json_post.last_comment] : [];
 
       const new_post = new PostClass(
         id,

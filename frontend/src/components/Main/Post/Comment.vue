@@ -16,6 +16,7 @@
 
     @Component
     export default class Comment extends Vue {
+        @Prop() private comment!: CommentType;
         @Prop() private position_in_array!: number;
 
         error = '';

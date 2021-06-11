@@ -30,8 +30,8 @@ export async function getAllComments(post_id: number): Promise<CommentType[]> {
 
   const comments_list: CommentType[] = [];
 
-  response.forEach((comment: { id: any, content: any; author: any; }) => {
-    comments_list.push({ id: comment.id, content: comment.content, author: comment.author });
+  response.forEach((comment: CommentType) => {
+    comments_list.push(comment);
   });
 
   return comments_list;

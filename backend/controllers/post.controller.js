@@ -55,7 +55,9 @@ exports.findAll = (req, res) => {
                         author: post.last_comment_author
                     };
                 }
+                else post.last_comment = null;
 
+                delete post.last_comment_id;
                 delete post.last_comment_content;
                 delete post.last_comment_author;
             });

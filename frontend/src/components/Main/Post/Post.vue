@@ -19,7 +19,15 @@
             v-on:new-comment-posted="addComment"
         />
 
-        <CommentsList v-if="post.comments_number > 0" v-bind:comments_list="this.post.comments"/>
+        <ul v-if="this.post.comments.length > 0" class="comments-list">
+            <Comment
+                v-for="(comment, index) in this.post.comments"
+                v-bind:key="comment.id"
+                v-bind:position_in_array="index"
+                v-bind:comment="comment"
+                v-on:comment-deleted="deleteComment"
+            />
+        </ul>
         
         <button
             type="button"
@@ -38,12 +46,12 @@
     
     import PostContent from './PostContent.vue';
     import NewComment from './NewComment.vue';
-    import CommentsList from './CommentsList.vue';
+    import Comment from './Comment.vue';
     import { getAllComments } from "../../../helpers/comment-getter";
     import { deletePost } from "../../../helpers/post-getter";
 
     @Component({
-      components: { PostContent, NewComment, CommentsList }
+      components: { PostContent, NewComment, Comment }
     })
     export default class Post extends Vue {
         //We need to create a Post class or interface that contains 
@@ -73,6 +81,12 @@
         addComment(new_comment: CommentType) {
             this.post.comments_number ++;
             this.post.comments.unshift(new_comment);
+            this.show_comment_form = false;
+            this.are_all_comments_shown = false;
+        }
+
+        deleteComment(comment_key_in_array: number) {
+            this.post.comments.splice(comment_key_in_array, 1);
         }
 
         erasePost() {
