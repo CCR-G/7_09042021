@@ -7,6 +7,16 @@ exports.create = (req, res) => {
         return res.status(400).send({ message: "Le contenu de la requête est vide !" });
     }
 
+    const content = req.body.content;
+    if (!content || content.length > 1300 || content.length < 20) {
+        return res.status(400).send({ error: `L'article doit comprendre entre 20 et 1300 caractères.` });
+    }
+
+    const user = req.body.user;
+    if (!user) {
+        return res.status(400).send({ error: "L'utilisateur n'est pas valide" });
+    }
+
     else {
         // Create a Post
         const post = new Post({
@@ -83,7 +93,7 @@ exports.delete = (req, res) => {
                 if (err) {
                     return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la suppression de l'article." });
                 }
-                else return res.status(200).send({ message: `L'article ${post_id} a été supprimé.` });
+                else return res.status(200).send({ message: `L'article a été supprimé.` });
             });
         }
     }

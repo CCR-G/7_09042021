@@ -9,8 +9,9 @@ exports.create = (req, res) => {
         return res.status(400).send({ message: "Le contenu de la requête est vide" });
     }
 
-    if (!req.body.username) {
-        return res.status(400).send({ error: `Le champ "nom d'utilisateur" ne peut être vide` });
+    const username = req.body.username;
+    if (!username || username.length > 30) {
+        return res.status(400).send({ error: `Le nom d'utilisateur doit comprendre entre 1 et 30 caractères` });
     }
 
     const user_email = req.body.email;
@@ -20,13 +21,13 @@ exports.create = (req, res) => {
 
     const user_password = req.body.password;
     if (!user_password || !utils.isPasswordValid(user_password)) {
-        return res.status(400).send({ error: "Le mot de passe doit contenir au minimum 8 caractères et contenir au moins une majuscule et une minuscule." });
+        return res.status(400).send({ error: "Le mot de passe doit contenir au minimum 8 caractères et contenir au moins une majuscule et une minuscule" });
     }
 
     bcrypt.hash(user_password, 10)
         .then((hashed_password) => {
             const user = new User({
-                username: req.body.username,
+                username: username,
                 email: user_email.toLowerCase(),
                 password: hashed_password
             });
@@ -34,7 +35,7 @@ exports.create = (req, res) => {
             // Save User in the database
             User.create(user, (err, created_user) => {
                 if (err) {
-                    return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la création de l'utilisateur." });
+                    return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la création de l'utilisateur" });
                 }
                 else {
                     const token = jwt.sign({
@@ -58,7 +59,7 @@ exports.create = (req, res) => {
                 }
             });
         })
-        .catch(error => { res.status(500).send({ error: "Une erreur est survenu lors de la création de l'utilisateur." }) });
+        .catch(error => { res.status(500).send({ error: "Une erreur est survenu lors de la création de l'utilisateur" }) });
 };
 
 exports.login = (req, res) => {

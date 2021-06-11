@@ -6,18 +6,33 @@ exports.create = (req, res) => {
         return res.status(400).send({ message: "Le contenu de la requête est vide !" });
     }
 
+    const content = req.body.content;
+    if (!content || content.length > 255 || content.length < 1) {
+        return res.status(400).send({ error: `Le commentaire doit comprendre entre 1 et 255 caractères.` });
+    }
+
+    const user_id = req.body.user_id;
+    if (!user_id) {
+        return res.status(400).send({ error: "L'utilisateur n'est pas valide" });
+    }
+
+    const post_id = req.body.post_id;
+    if (!post_id) {
+        return res.status(400).send({ error: "L'identifiant de l'article n'est pas valide" });
+    }
+
     else {
         // Create a Comment
         const comment = new Comment({
-            content: req.body.content,
-            user: req.body.user_id,
-            post: req.body.post_id
+            content: content,
+            user: user_id,
+            post: post_id
         });
 
         // Save Comment in the database
         Comment.create(comment, (err, created_comment) => {
             if (err) {
-                res.status(500).send({ message: err.message || "Une erreur est survenue lors de la création du Comment." });
+                res.status(500).send({ message: err.message || "Une erreur est survenue lors de la création du commentaire" });
             }
             else return res.status(200).json(created_comment);
         });
@@ -27,7 +42,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     Comment.getAllById(req.params.postId, (err, data) => {
         if (err) {
-            return res.status(500).send({ message: err.message || "Some error occurred while retrieving comments." });
+            return res.status(500).send({ message: err.message || "Une erreur est survenue à la récupération des commentaires" });
         }
         else return res.send(data);
     });
@@ -41,7 +56,7 @@ exports.delete = (req, res) => {
     else {
         const comment_id = req.params.commentId;
         if (!comment_id) {
-            return res.status(400).send({ error: 'Request must contain a comment id' });
+            return res.status(400).send({ error: 'Identifiant invalide' });
         }
 
         else {
@@ -49,7 +64,7 @@ exports.delete = (req, res) => {
                 if (err) {
                     return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la suppression du comment." })
                 }
-                else return res.status(200).send({ message: `Comment ${comment_id} was deleted.` });
+                else return res.status(200).send({ message: `Le commaintaire a été supprimé.` });
             });
         }
     }
