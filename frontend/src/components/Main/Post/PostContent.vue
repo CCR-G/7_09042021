@@ -14,7 +14,7 @@
             />
         </div>
 
-        <p>{{ post.content }}</p>
+        <p class="text-content">{{ post.content }}</p>
 
     </div>
 </template>
