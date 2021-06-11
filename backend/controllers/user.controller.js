@@ -6,26 +6,32 @@ const jwt = require('jsonwebtoken');
 exports.create = (req, res) => {
     // Validate request
     if (!req.body) {
-        return res.status(400).send({ message: "Le contenu de la requête est vide !" });
+        return res.status(400).send({ message: "Le contenu de la requête est vide" });
     }
 
     if (!req.body.username) {
-        return res.status(400).send({ error: `Le champ "nom d'utilisateur" ne peut être vide.` });
+        return res.status(400).send({ error: `Le champ "nom d'utilisateur" ne peut être vide` });
     }
 
-    if (!req.body.email) {
-        return res.status(400).send({ error: 'Le champ "email" ne peut être vide.' });
+    const user_email = req.body.email;
+
+    if (!user_email) {
+        return res.status(400).send({ error: 'Le champ "email" ne peut être vide' });
+    }
+
+    if (!utils.isEmailValid(user_email)) {
+        return res.status(400).send({ error: "L'adresse email n'est pas valide" })
     }
 
     if (!req.body.password) {
-        return res.status(400).send({ error: 'Le champ de "mot de passe" ne peut être vide.' });
+        return res.status(400).send({ error: 'Le champ de "mot de passe" ne peut être vide' });
     }
 
     bcrypt.hash(req.body.password, 10)
         .then((hashed_password) => {
             const user = new User({
                 username: req.body.username,
-                email: req.body.email.toLowerCase(),
+                email: user_email.toLowerCase(),
                 password: hashed_password
             });
 
@@ -39,7 +45,7 @@ exports.create = (req, res) => {
                         user_id: created_user.id,
                         email: created_user.email,
                         username: created_user.username,
-                        admin: user.admin.includes(1)
+                        admin: false
                     },
                         process.env.TOKEN_SECRET_KEY,
                         { expiresIn: '1h' }
@@ -49,7 +55,7 @@ exports.create = (req, res) => {
                             user_id: created_user.id,
                             username: created_user.username,
                             email: created_user.email,
-                            admin: user.admin.includes(1)
+                            admin: false
                         },
                         token: token
                     });
