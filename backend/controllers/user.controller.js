@@ -6,19 +6,19 @@ const jwt = require('jsonwebtoken');
 exports.create = (req, res) => {
     // Validate request
     if (!req.body) {
-        return res.status(400).send({ message: "Request content can not be empty!" });
+        return res.status(400).send({ message: "Le contenu de la requête est vide !" });
     }
 
     if (!req.body.username) {
-        return res.status(400).send({ error: 'Username field cannot be empty' });
+        return res.status(400).send({ error: `Le champ "nom d'utilisateur" ne peut être vide.` });
     }
 
     if (!req.body.email) {
-        return res.status(400).send({ error: 'Email field cannot be empty' });
+        return res.status(400).send({ error: 'Le champ "email" ne peut être vide.' });
     }
 
     if (!req.body.password) {
-        return res.status(400).send({ error: 'Password field cannot be empty' });
+        return res.status(400).send({ error: 'Le champ de "mot de passe" ne peut être vide.' });
     }
 
     bcrypt.hash(req.body.password, 10)
@@ -32,7 +32,7 @@ exports.create = (req, res) => {
             // Save User in the database
             User.create(user, (err, created_user) => {
                 if (err) {
-                    return res.status(500).send({ message: err.message || "Some error occurred while creating the User." });
+                    return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la création de l'utilisateur." });
                 }
                 else {
                     const token = jwt.sign({
@@ -56,29 +56,28 @@ exports.create = (req, res) => {
                 }
             });
         })
-        .catch((err) => {
-            console.log("Could not create hashed password");
-            console.log(err);
-        });
+        .catch(error => { res.status(500).send({ error: "Une erreur est survenu lors de la création de l'utilisateur." }) });
 };
 
 exports.login = (req, res) => {
     // Validate request
     if (!req.body) {
-        return res.status(400).send({ message: "Request content can not be empty!" });
+        return res.status(400).send({ message: "Le contenu de la requête est vide !" });
     }
 
     if (!req.body.email) {
-        return res.status(400).send({ error: 'Email field cannot be empty' });
+        return res.status(400).send({ error: 'Le champ "email" ne peut être vide.' });
     }
 
     if (!req.body.password) {
-        return res.status(400).send({ error: 'Password field cannot be empty' });
+        return res.status(400).send({ error: 'Le champ de "mot de passe" ne peut être vide.' });
     }
 
     User.getOneByEmail(req.body.email, (err, user) => {
         if (err) {
-            return res.status(500).send({ message: err.message || "Some error occurred while retrieving the user." });
+            return res.status(500).send({
+                message: err.message || "Une erreur est survenue lors de la récupération de l'utilisateur."
+            });
         }
 
         if (!user) {
@@ -110,14 +109,14 @@ exports.login = (req, res) => {
                     token: token
                 });
             })
-            .catch(error => { res.status(500).send({ error }) });
+            .catch(error => { res.status(500).send({ error: "Une erreur est survenu lors de l'identification de l'utilisateur." }) });
     });
 }
 
 exports.delete = (req, res) => {
     // Validate request
     if (!req.body) {
-        return res.status(400).send({ error: "Request content can not be empty!" });
+        return res.status(400).send({ error: "Le contenu de la requête est vide !" });
     }
 
     if (!req.params.userId) {
@@ -125,12 +124,12 @@ exports.delete = (req, res) => {
     }
 
     if (!req.body.password) {
-        return res.status(400).send({ error: 'Password field cannot be empty' });
+        return res.status(400).send({ error: 'Le champ de "mot de passe" ne peut être vide.' });
     }
 
     User.getOneById(req.params.userId, (err, user) => {
         if (err) {
-            return res.status(500).send({ message: err.message || "Some error occurred while retrieving the user." });
+            return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la récupération de l'utilisateur." });
         }
 
         if (!user) {
@@ -145,11 +144,11 @@ exports.delete = (req, res) => {
 
                 User.delete(user.id, (err) => {
                     if (err) {
-                        return res.status(500).send({ message: err.message || "Some error occured while deleted the user." })
+                        return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la suppression du user." })
                     }
-                    return res.status(200).send({ message: "User fully deleted with all related posts and comments." });
+                    return res.status(200).send({ message: "L'utilisateur, ses articles et commentaires ont été supprimés." });
                 });
             })
-            .catch(error => { res.status(500).send({ error: "Could not compare passwords." }) });
+            .catch(error => { res.status(500).send({ error: "Une erreur est survenu lors de l'identification de l'utilisateur." }) });
     });
 }

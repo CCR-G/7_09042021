@@ -3,7 +3,7 @@ const Comment = require("../models/comment.model");
 exports.create = (req, res) => {
     // Validate request
     if (!req.body) {
-        return res.status(400).send({ message: "Content can not be empty!" });
+        return res.status(400).send({ message: "Le contenu de la requête est vide !" });
     }
 
     else {
@@ -17,7 +17,7 @@ exports.create = (req, res) => {
         // Save Comment in the database
         Comment.create(comment, (err, created_comment) => {
             if (err) {
-                res.status(500).send({ message: err.message || "Some error occurred while creating the Comment." });
+                res.status(500).send({ message: err.message || "Une erreur est survenue lors de la création du Comment." });
             }
             else return res.status(200).json(created_comment);
         });
@@ -35,7 +35,7 @@ exports.findAll = (req, res) => {
 
 exports.delete = (req, res) => {
     if (!req.body) {
-        return res.status(400).send({ error: "Request content can not be empty!" });
+        return res.status(400).send({ error: "Le contenu de la requête est vide !" });
     }
 
     else {
@@ -47,7 +47,7 @@ exports.delete = (req, res) => {
         else {
             Comment.delete(comment_id, (err) => {
                 if (err) {
-                    return res.status(500).send({ message: err.message || "Some error occured while deleted the comment." })
+                    return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la suppression du comment." })
                 }
                 else return res.status(200).send({ message: `Comment ${comment_id} was deleted.` });
             });

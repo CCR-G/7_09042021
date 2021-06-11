@@ -4,7 +4,7 @@ const Image = require("../models/image.model.js");
 exports.create = (req, res) => {
     // Validate request
     if (!req.body) {
-        return res.status(400).send({ message: "Content can not be empty!" });
+        return res.status(400).send({ message: "Le contenu de la requête est vide !" });
     }
 
     else {
@@ -17,7 +17,7 @@ exports.create = (req, res) => {
         // Save Post in the database
         Post.create(post, (err, created_post) => {
             if (err) {
-                return res.status(500).send({ message: err.message || "Some error occurred while creating the Post." });
+                return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la création de l'article." });
             }
 
             else {
@@ -28,7 +28,7 @@ exports.create = (req, res) => {
 
                     Image.create(created_post.id, image, (err, created_image) => {
                         if (err) {
-                            return res.status(500).send({ message: err.message || "Some error occurred while creating the Image." });
+                            return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la création de l'image." });
                         }
                         else return res.status(200).json({ created_post, created_image });
                     });
@@ -43,7 +43,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     Post.getAll((err, data) => {
         if (err) {
-            return res.status(500).send({ message: err.message || "Some error occurred while retrieving posts." });
+            return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la récupération des articles." });
         }
 
         else {
@@ -69,21 +69,21 @@ exports.findAll = (req, res) => {
 
 exports.delete = (req, res) => {
     if (!req.body) {
-        return res.status(400).send({ error: "Request content can not be empty!" });
+        return res.status(400).send({ error: "Le contenu de la requête est vide !" });
     }
 
     else {
         const post_id = req.params.postId;
         if (!post_id) {
-            return res.status(400).send({ error: 'Request must contain a post id' });
+            return res.status(400).send({ error: "La requête ne contient pas d'id d'article." });
         }
 
         else {
             Post.delete(post_id, (err, data) => {
                 if (err) {
-                    return res.status(500).send({ message: err.message || "Some error occured while deleting the post." });
+                    return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la suppression de l'article." });
                 }
-                else return res.status(200).send({ message: `Post ${post_id} was deleted.` });
+                else return res.status(200).send({ message: `L'article ${post_id} a été supprimé.` });
             });
         }
     }
