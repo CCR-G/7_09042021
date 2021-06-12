@@ -1,27 +1,40 @@
-.comment-form {
-    margin: 30px 0;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    
-    .new-comment-field {
-        padding: 15px;
-        width: 100%;
-        background-color: lightgray;
-        border: none;
-    }
+// COMMENT
 
-    .new-comment-buttons {
-        border: none;
-        padding: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-content: space-between;
-        padding: 0;
-        margin-left: 15px;
-    }
+.comment-form {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin: 15px 0 15px;
 }
+
+.comment-form-fields {
+    display: flex;
+    width: 100%;
+}
+
+.button.show-comment-form {
+    align-self: flex-end;
+}
+
+.new-comment-field {
+    padding: 15px;
+    width: 100%;
+    background-color: rgb(241, 241, 241);
+    border: none;
+}
+
+.new-comment-buttons {
+    border: none;
+    padding: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: space-between;
+    padding: 0;
+    margin-left: 15px;
+}
+
+// POST
 
 .post-form {
     display: flex;

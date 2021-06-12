@@ -8,8 +8,8 @@
             <input class="form-field new-post-field" id="post-image-url" type="url" placeholder="https://giphy.gif" v-model="new_post.image_url">
 
             <fieldset class="new-post-buttons">
-                <input type="reset" value="Effacer" class="button cancel">
-                <button type="button" v-on:click="createPost" class="button">Poster</button>
+                <input type="reset" value="Annuler" class="button cancel">
+                <button type="button" v-on:click="createPost" class="button">Publier</button>
             </fieldset>
             <p v-if="error">{{ error }}</p>
         </form>

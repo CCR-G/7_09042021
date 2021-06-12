@@ -1,26 +1,32 @@
+.comments-list-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 .comments-list {
-    border-left: orangered 3px solid;
-    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.comment {
+    border-left: orangered 2px solid;
+    list-style: none;
+    margin: 20px 0;
     padding-left: 20px;
 
-    .comment {
-        list-style: none;
-        margin: 50px 0;
-        width: 100%;
+    .comment-author {
+        font-weight: bold;
+    }
 
-        .comment-author {
-            font-weight: bold;
-        }
-
-        > .text-content {
-            background-color: lightgray;
-            border-radius: 5px;
-            padding: 10px 12px;
-        }
+    > .text-content {
+        background-color: rgb(241, 241, 241);
+        border-radius: 5px;
+        padding: 10px 12px;
     }
 }
 
-.more-comments {
+.button.more-comments {
     align-self: flex-end;
-    margin-top: 10px;
 }

@@ -1,12 +1,21 @@
 <template>
     <form class="comment-form">
-        <div class="comment-form-fields">
+        <button
+            v-if="!show_comment_form"
+            v-on:click="displayCommentForm"
+            class="button show-comment-form"
+        >
+            Ajouter un commentaire
+        </button>
+
+        <div v-if="show_comment_form" class="comment-form-fields">
             <textarea class="form-field new-comment-field" aria-label="Entrez un commentaire" v-model='new_comment.content'></textarea>
             <fieldset class="new-comment-buttons">
                 <input type="reset" value="Annuler" v-on:click="cancel" class="button cancel">
                 <button v-on:click="addComment" type="button" class="button">Commenter</button>
             </fieldset>
         </div>
+
         <p v-if="error">{{ error }}</p>
     </form>
 </template>
@@ -20,6 +29,7 @@
     export default class NewComment extends Vue {
         @Prop() private post!: PostClass;
 
+        private show_comment_form = false;
         private error = '';
 
         private new_comment: CommentType = {
@@ -27,6 +37,10 @@
             content: "",
             post: this.post.id
         };
+
+        displayCommentForm() {
+            this.show_comment_form = true;
+        }
 
         addComment(): void {
             postNewComment(this.new_comment)
@@ -38,7 +52,7 @@
         }
 
         cancel() {
-            this.$emit("cancel");
+            this.show_comment_form = false;
         }
     }
 </script>

@@ -4,7 +4,7 @@
             <p class="comment-author">{{ comment.author }}</p>
         </header>
         <p class="text-content">{{ comment.content }}</p>
-        <button v-if="is_admin" v-on:click="eraseComment" class="button delete-button">Supprimer</button>
+        <button v-if="is_admin" v-on:click="eraseComment" class="button delete-button">Supprimer le commentaire</button>
         <p v-if="error">{{ error }}</p>
     </li>
 </template>
