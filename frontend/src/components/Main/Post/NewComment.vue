@@ -4,6 +4,7 @@
       v-if="!show_comment_form"
       v-on:click="displayCommentForm"
       class="button show-comment-form"
+      ref="openCommentFormButton"
     >
       Ajouter un commentaire
     </button>
@@ -13,6 +14,7 @@
         class="form-field new-comment-field"
         aria-label="Entrez un commentaire"
         v-model="new_comment.content"
+        ref="newCommentTextarea"
       ></textarea>
       <fieldset class="new-comment-buttons">
         <input
@@ -32,13 +34,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Ref } from "vue-property-decorator";
 import { postNewComment } from "../../../helpers/comment-getter";
 import { PostClass, CommentType } from "../../../types";
 
 @Component
 export default class NewComment extends Vue {
   @Prop() private post!: PostClass;
+  @Ref() readonly newCommentTextarea!: HTMLTextAreaElement;
+  @Ref() readonly openCommentFormButton!: HTMLButtonElement;
 
   private show_comment_form = false;
   private error = "";
@@ -51,6 +55,7 @@ export default class NewComment extends Vue {
 
   displayCommentForm() {
     this.show_comment_form = true;
+    this.$nextTick(() => this.newCommentTextarea.focus());
   }
 
   addComment(): void {
@@ -71,6 +76,7 @@ export default class NewComment extends Vue {
     this.new_comment.content = "";
     this.error = "";
     this.show_comment_form = false;
+    this.$nextTick(() => this.openCommentFormButton.focus());
   }
 }
 </script>

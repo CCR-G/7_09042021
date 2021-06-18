@@ -3,8 +3,9 @@
     <button
       type="button"
       v-if="!is_deleting"
-      v-on:click="toggleDeletingForm"
+      v-on:click="openDeletingForm"
       class="button account-button"
+      ref="deleteAccountFormButton"
     >
       Supprimer le compte
     </button>
@@ -12,7 +13,7 @@
     <form v-else>
       <label>
         Entrez votre mot de passe :
-        <input type="password" v-model="password" class="connection-field" />
+        <input type="password" v-model="password" class="connection-field" ref="passwordInput" />
       </label>
 
       <fieldset class="delete-account-buttons">
@@ -21,7 +22,7 @@
         </button>
         <button
           type="reset"
-          v-on:click="toggleDeletingForm"
+          v-on:click="closeDeletingForm"
           class="button cancel"
         >
           Annuler
@@ -34,17 +35,26 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Ref } from "vue-property-decorator";
 import { deleteUser } from "../../helpers/user-getter";
 
 @Component
 export default class DeleteAccount extends Vue {
+  @Ref() readonly deleteAccountFormButton!: HTMLButtonElement;
+  @Ref() readonly passwordInput!: HTMLInputElement;
+
   is_deleting = false;
   private password = "";
   private error = "";
 
-  toggleDeletingForm(): void {
-    this.is_deleting = !this.is_deleting;
+  openDeletingForm(): void {
+    this.is_deleting = true;
+    this.$nextTick(() => this.passwordInput.focus());
+  }
+
+  closeDeletingForm(): void {
+    this.is_deleting = false;
+    this.$nextTick(() => this.deleteAccountFormButton.focus());
   }
 
   deleteAccount(): void {
