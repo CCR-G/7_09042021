@@ -1,6 +1,8 @@
 module.exports = {
   root: true,
   env: {
+    browser: true,
+    es6: true,
     node: true,
   },
   extends: [
@@ -12,24 +14,15 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 2020,
+    parser: "@typescript-eslint/parser",
+    sourceType: "module",
   },
+  plugins: ["vue", "@typescript-eslint"],
   rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "indent": ["error", 4],
+    warn: "off",
+    indent: ["error", 2],
     "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "double"],
-    "semi": ["error", "always"],
+    quotes: ["error", "double"],
+    semi: ["error", "always"],
   },
-  overrides: [
-    {
-      files: [
-        "**/__tests__/*.{j,t}s?(x)",
-        "**/tests/unit/**/*.spec.{j,t}s?(x)",
-      ],
-      env: {
-        jest: true,
-      },
-    },
-  ],
 };
