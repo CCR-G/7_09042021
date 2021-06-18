@@ -1,57 +1,65 @@
 <template>
-    <section>
-        <button
-            type="button"
-            v-if="!is_deleting"
-            v-on:click="toggleDeletingForm"
-            class="button account-button"
-        >
-            Supprimer le compte
+  <section>
+    <button
+      type="button"
+      v-if="!is_deleting"
+      v-on:click="toggleDeletingForm"
+      class="button account-button"
+    >
+      Supprimer le compte
+    </button>
+
+    <form v-else>
+      <label>
+        Entrez votre mot de passe :
+        <input type="password" v-model="password" class="connection-field" />
+      </label>
+
+      <fieldset class="delete-account-buttons">
+        <button type="button" v-on:click="deleteAccount" class="button">
+          Confirmer la suppression du compte
         </button>
+        <button
+          type="reset"
+          v-on:click="toggleDeletingForm"
+          class="button cancel"
+        >
+          Annuler
+        </button>
+      </fieldset>
 
-        <form v-else>
-            <label>
-                Entrez votre mot de passe :
-                <input type="password" v-model="password">
-            </label>
-
-            <fieldset class="delete-account-buttons">
-            <button type="button" v-on:click="deleteAccount" class="button">Confirmer la suppression du compte</button>
-                <button type="reset" v-on:click="toggleDeletingForm" class="button cancel">Annuler</button>
-            </fieldset>
-
-            <p>{{ error }}</p>
-        </form>
-    </section>
+      <p>{{ error }}</p>
+    </form>
+  </section>
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from "vue-property-decorator";
-    import { deleteUser } from "../../helpers/user-getter";
+import { Component, Vue } from "vue-property-decorator";
+import { deleteUser } from "../../helpers/user-getter";
 
-    @Component
-    export default class DeleteAccount extends Vue {
-        is_deleting = false;
-        private password = '';
-        private error = '';
+@Component
+export default class DeleteAccount extends Vue {
+  is_deleting = false;
+  private password = "";
+  private error = "";
 
-        toggleDeletingForm(): void {
-            this.is_deleting = !this.is_deleting;
-        }
+  toggleDeletingForm(): void {
+    this.is_deleting = !this.is_deleting;
+  }
 
-        deleteAccount(): void {
-            deleteUser(this.$store.state.user.id, this.password)
-                .then((res) => {
-                    this.password = '';
-                    this.error = '';
+  deleteAccount(): void {
+    deleteUser(this.$store.state.user.id, this.password)
+      .then((res) => {
+        this.password = "";
+        this.error = "";
 
-                    sessionStorage.removeItem("token");
-                    this.$router.replace("/register");
-                    this.$store.dispatch('setUser', { username: '', email: '' });
-                })
-                .catch((err) => {
-                    this.error = err.message;
-                });
-        }
-    }
+        sessionStorage.removeItem("token");
+        this.$router.replace("/register");
+        this.$store.dispatch("clearUser");
+      })
+      .catch((err) => {
+        this.error = err.message;
+      });
+  }
+}
 </script>

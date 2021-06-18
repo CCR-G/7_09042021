@@ -1,80 +1,83 @@
 <template>
-    <article class="post">
-        <div class="post-content">
-            <header class="post-header">
-                <div>
-                    <p class="post-author">{{ post.author }}</p>
-                    <time v-bind:datetime=post.postdate>{{ post.postdate }}</time>
-                </div>
-
-                <button v-if="is_admin" v-on:click="erasePost" class="button delete-button delete-post">Supprimer l'article</button>
-            </header>
-
-            <div class="post-image-container">
-                <img
-                    v-if="is_image_valid"
-                    v-bind:src="post.image_url"
-                    v-on:error="invalidateImage"
-                    class="post-image"
-                />
-            </div>
-
-            <p class="text-content">{{ post.content }}</p>
+  <article class="post">
+    <div class="post-content">
+      <header class="post-header">
+        <div>
+          <p class="post-author">{{ post.author }}</p>
+          <time v-bind:datetime="post.postdate">{{ post.postdate }}</time>
         </div>
 
-        <p v-if="error">{{ error }}</p>
+        <button
+          v-if="is_admin"
+          v-on:click="erasePost"
+          class="button delete-button delete-post"
+        >
+          Supprimer l'article
+        </button>
+      </header>
 
-        <hr>
-        <NewComment v-bind:post='post' v-on:new-comment-posted="addComment" />
+      <div class="post-image-container">
+        <img
+          v-if="is_image_valid"
+          v-bind:src="post.image_url"
+          v-on:error="invalidateImage"
+          class="post-image"
+        />
+      </div>
 
-        <hr v-if="this.post.comments.length > 0">
-        <CommentsList v-bind:post='post' />
+      <p class="text-content">{{ post.content }}</p>
+    </div>
 
-    </article>
+    <p v-if="error">{{ error }}</p>
+
+    <hr />
+    <NewComment v-bind:post="post" v-on:new-comment-posted="addComment" />
+
+    <hr v-if="this.post.comments.length > 0" />
+    <CommentsList v-bind:post="post" />
+  </article>
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Vue } from "vue-property-decorator";
-    import { CommentType, PostClass } from "../../../types";
-    
-    import NewComment from './NewComment.vue';
-    import CommentsList from './CommentsList.vue';
-    import { deletePost } from "../../../helpers/post-getter";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { CommentType, PostClass } from "../../../types";
 
-    @Component({
-      components: { NewComment, CommentsList }
-    })
-    export default class Post extends Vue {
-        //We need to create a Post class or interface that contains 
-        // an author, a date, a content, comments
-        @Prop() private post!: PostClass;
-        @Prop() private position_in_array!: number;
+import NewComment from "./NewComment.vue";
+import CommentsList from "./CommentsList.vue";
+import { deletePost } from "../../../helpers/post-getter";
 
-        private is_admin = this.$store.state.user.admin;
-        private error = '';
-        private is_image_valid = false;
+@Component({
+  components: { NewComment, CommentsList },
+})
+export default class Post extends Vue {
+  @Prop() private post!: PostClass;
+  @Prop() private position_in_array!: number;
 
-        mounted() {
-            this.is_image_valid = !!(this.post.image_url);
-        }
+  private is_admin = this.$store.state.user.admin;
+  private error = "";
+  private is_image_valid = false;
 
-        invalidateImage() {
-            this.is_image_valid = false;
-        }
+  mounted() {
+    this.is_image_valid = !!this.post.image_url;
+  }
 
-        addComment(new_comment: CommentType) {
-            this.post.comments.unshift(new_comment);
-        }
+  invalidateImage() {
+    this.is_image_valid = false;
+  }
 
-        erasePost() {
-            deletePost(this.post.id)
-                .then(() => {
-                    this.$emit("post-deleted", this.position_in_array);
-                    this.error = '';
-                })
-                .catch((err) => {
-                    this.error = err.message;
-                })
-        }
-    }
+  addComment(new_comment: CommentType) {
+    this.post.comments.unshift(new_comment);
+  }
+
+  erasePost() {
+    deletePost(this.post.id)
+      .then(() => {
+        this.$emit("post-deleted", this.position_in_array);
+        this.error = "";
+      })
+      .catch((err) => {
+        this.error = err.message;
+      });
+  }
+}
 </script>

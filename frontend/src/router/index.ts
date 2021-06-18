@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Main from "../views/Main.vue";
-import { getToken } from '../helpers/token-getter';
+import { getToken } from "../helpers/token-getter";
 import { authenticateUser } from "../helpers/user-getter";
 import store from "../store";
 import { clearSession } from "../helpers/clear-session";
@@ -44,25 +44,25 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if(!getToken()) {
+  if (!getToken()) {
     clearSession();
-    if (to.name !== 'Login' && to.name !== 'Register') {
-      next({ name: 'Login' });
-    };
+    if (to.name !== "Login" && to.name !== "Register") {
+      next({ name: "Login" });
+    }
     next();
     return;
   }
 
   authenticateUser()
-    .then(user => {
-      store.dispatch('setUser', user);
+    .then((user) => {
+      store.dispatch("setUser", user);
       next();
     })
     .catch(() => {
       clearSession();
-      if (to.name !== 'Login' && to.name !== 'Register') {
-        next({ name: 'Login' });
-      };
+      if (to.name !== "Login" && to.name !== "Register") {
+        next({ name: "Login" });
+      }
     });
 });
 

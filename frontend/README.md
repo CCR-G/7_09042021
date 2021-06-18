@@ -1,4 +1,4 @@
-# my-app
+# Groupomania - Réseau social interne
 
 ## Project setup
 ```

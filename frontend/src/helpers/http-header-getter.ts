@@ -1,7 +1,7 @@
-import { getToken } from './token-getter';
+import { getToken } from "./token-getter";
 
 export function getHttpHeaders() {
-  const headers = { "Content-type": "application/json", "Authorization": "" }
+  const headers = { "Content-type": "application/json", Authorization: "" };
 
   const token = getToken();
   if (token) {

@@ -6,11 +6,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: {
-      id: '',
-      username: '',
-      email: '',
-      admin: false
-    }
+      id: "",
+      username: "",
+      email: "",
+      admin: false,
+    },
   },
   mutations: {
     mutateUser(state, user) {
@@ -18,16 +18,16 @@ export default new Vuex.Store({
       state.user.username = user.username;
       state.user.email = user.email;
       state.user.admin = user.admin;
-    }
+    },
   },
   actions: {
     setUser({ commit }, user) {
-      commit('mutateUser', user)
+      commit("mutateUser", user);
     },
 
     clearUser({ commit }) {
-      commit('mutateUser', { id: '', username: '', email: '', admin: false })
-    }
+      commit("mutateUser", { id: "", username: "", email: "", admin: false });
+    },
   },
   modules: {},
 });
