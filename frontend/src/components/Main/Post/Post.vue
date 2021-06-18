@@ -21,6 +21,7 @@
           v-if="is_image_valid"
           v-bind:src="post.image_url"
           v-on:error="invalidateImage"
+          alt=""
           class="post-image"
         />
       </div>
