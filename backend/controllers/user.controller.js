@@ -145,7 +145,7 @@ exports.delete = (req, res) => {
                     return res.status(401).send({ error: 'Mot de passe incorrect !' });
                 }
 
-                User.delete(user.id, (err) => {
+                User.delete(user.id, (err, user) => {
                     if (err) {
                         return res.status(500).send({ message: err.message || "Une erreur est survenue lors de la suppression du user." })
                     }

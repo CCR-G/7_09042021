@@ -64,9 +64,20 @@ User.delete = (user_id, result) => {
             result(null, err);
             return;
         }
-
-        console.log(`Comments with user id ${user_id} were deleted`, res[0]);
+        else console.log(`Comments with user id ${user_id} were deleted`);
     });
+
+    sql.query(
+        `DELETE Images FROM Images RIGHT JOIN Posts ON Posts.id = Images.post WHERE Posts.user = ?;`,
+        user_id, (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                result(null, err);
+                return;
+            }
+
+            console.log(`Images related to user ${user_id} were deleted.`);
+        });
 
     sql.query(`DELETE FROM Posts WHERE user = ?;`, user_id, (err, res) => {
         if (err) {
@@ -74,8 +85,7 @@ User.delete = (user_id, result) => {
             result(null, err);
             return;
         }
-
-        console.log(`Posts with user id ${user_id} were deleted.`, res[0]);
+        else console.log(`Posts with user id ${user_id} were deleted.`);
     });
 
     sql.query(`DELETE FROM Users WHERE id = ?;`, user_id, (err, res) => {
@@ -84,10 +94,10 @@ User.delete = (user_id, result) => {
             result(null, err);
             return;
         }
-
-        console.log(`User with id ${user_id} was deleted.`, res[0]);
-
-        result(null, res[0]);
+        else {
+            console.log(`User with id ${user_id} was deleted.`);
+            result(null, res[0]);
+        }
     });
 }
 
