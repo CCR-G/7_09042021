@@ -16,9 +16,9 @@ exports.create = (req, res) => {
         return res.status(400).send({ error: "L'utilisateur n'est pas valide" });
     }
 
-    const post_id = req.body.post_id;
+    const post_id = req.params.postId;
     if (!post_id) {
-        return res.status(400).send({ error: "L'identifiant de l'article n'est pas valide" });
+        return res.status(400).send({ error: "Identifiant de l'article invalide" });
     }
 
     else {
@@ -40,7 +40,12 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    Comment.getAllById(req.params.postId, (err, data) => {
+    const post_id = req.params.postId;
+    if (!post_id) {
+        return res.status(400).send({ error: "Identifiant de l'article invalide" });
+    }
+
+    Comment.getAllById(post_id, (err, data) => {
         if (err) {
             return res.status(500).send({ message: err.message || "Une erreur est survenue à la récupération des commentaires" });
         }

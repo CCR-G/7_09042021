@@ -18,7 +18,7 @@
         <input
           type="reset"
           value="Annuler"
-          v-on:click="cancel"
+          v-on:click="close"
           class="button cancel"
         />
         <button v-on:click="addComment" type="button" class="button">
@@ -60,14 +60,16 @@ export default class NewComment extends Vue {
           ...this.new_comment,
           author: this.$store.state.user.username,
         });
-        this.new_comment.content = "";
+        this.close();
       })
       .catch((err) => {
         this.error = err.message;
       });
   }
 
-  cancel() {
+  close() {
+    this.new_comment.content = "";
+    this.error = "";
     this.show_comment_form = false;
   }
 }

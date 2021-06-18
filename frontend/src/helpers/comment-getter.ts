@@ -10,7 +10,6 @@ export async function postNewComment(comment: CommentType): Promise<Comment> {
       body: JSON.stringify({
         content: comment.content,
         user_id: comment.author,
-        post_id: comment.post,
       }),
       headers: getHttpHeaders(),
     }
