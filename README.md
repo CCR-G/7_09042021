@@ -43,11 +43,21 @@ TOKEN_SECRET_KEY=Long_And_Complicated_Secret_Key
 * In a terminal and from within the `backend` folder of the repository, run `npm run build`
 
 ### Frontend
+
+#### Easy way (recommended)
+* Go to https://ccr-g.github.io/7_09042021/.
+
+#### Vue serve way
 * In a terminal and from within the `frontend` folder of the repository, run `npm run serve`
-* The command should tell you that the app is running at `http://localhost:8081` (the port may differ).
+* The command should tell you that the app is running and that you can access it at http://localhost:8081 (the port may differ).
+
+#### Laragon way
+* Create a `groupomania` folder in the Laragon `www` folder.
+* Copy the content of the `dist` folder to the `groupomania` one you created.
+* Access the app at http://localhost/groupomania.
 
 ### Use and test
-* Open the frontend page at `http://localhost:8081` and register yourself as a new user.
+* Open the frontend page at http://localhost:8081 and register yourself as a new user.
 * If you wish to test the app as a moderator, you may do so with user `Sabine`. The credentials are as follow : `sabine@gmail.com` - `Sab1neSab1ne`.
 
 ## Available features

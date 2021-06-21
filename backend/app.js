@@ -21,12 +21,10 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-let accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+let accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 app.use(morgan('combined', { stream: accessLogStream }));
 
 // ROUTES
-
-app.get('/', (req, res) => res.send('Hello World!'));
 
 require("./routes/post.routes")(app);
 require("./routes/user.routes")(app);

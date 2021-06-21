@@ -35,10 +35,14 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "register" */ "../views/Register.vue"),
   },
+  {
+    path: "*",
+    redirect: { name: "Main" }
+  }
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: "hash",
   base: process.env.BASE_URL,
   routes,
 });
@@ -56,6 +60,9 @@ router.beforeEach((to, from, next) => {
   authenticateUser()
     .then((user) => {
       store.dispatch("setUser", user);
+      if (to.name === "Login" || to.name === "Register") {
+        next({ name: "Main" });
+      }
       next();
     })
     .catch(() => {
