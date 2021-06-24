@@ -60,7 +60,8 @@ TOKEN_SECRET_KEY=Long_And_Complicated_Secret_Key
 * Open the frontend page at http://localhost:8081 and register yourself as a new user.
 * If you wish to test the app as a moderator, you may do so with user `Sabine`. The credentials are as follow : `sabine@gmail.com` - `Sab1neSab1ne`.
 
-## Available features
+## Features
+Among available user features you will find :
 * Register a new user with a username and secure password.
 * Login and stay authenticated.
 * View articles and comments from other users of the network.
@@ -69,17 +70,7 @@ TOKEN_SECRET_KEY=Long_And_Complicated_Secret_Key
 * Logout of the app or delete your account.
 * Browse as a moderator to be able to delete unappropriate articles and comments.
 
-## Features roadmap
-* Change username, email and password.
-* Add a GitHub page with a GitHub action for easy deployement upon pushing.
-* Delete own articles and comments.
-* Upload images.
-* Confirm password upon registration.
-* Save user email for quicker login in.
-* Lazy loading on articles and comments.
-* Date and hour on comments
-* API documentation
-* …
+The full list of merged and potentials future development and user features in the [Groupomania - Roadmap project](https://github.com/CCR-G/7_09042021/projects/1).
 
 ## Note
 
@@ -87,6 +78,6 @@ I built this app using VueJS and TypeScript for the frontend, and NodeJS for the
 
 My objectives were to make a nice UX and accessible UI.
 I tried as much as possible to make the backend secure and the overall code readable and maintanable.
-I believe that all those topic are long-term tasks and that they are likely to never end. Development is beautiful in that it is always possible to improve the code and add new features to a project.
+I believe that all those are long-term tasks and that they are likely to never end. Development is beautiful in that it is always possible to improve the code and add new features to a project.
 
-This exercice is the last part of my training to become a graduated web developper. Please do send me comments or feedback!
+This exercice is the last part of my training to become a graduated web developper. Please do send me comments or feedback about anything!
